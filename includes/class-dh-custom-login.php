@@ -67,8 +67,8 @@ class Dh_Custom_Login {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PROXY_NETWORK_PRO_VERSION' ) ) {
-			$this->version = PROXY_NETWORK_PRO_VERSION;
+		if ( defined( 'DH_CUSTOM_LOGIN_VERSION' ) ) {
+			$this->version = DH_CUSTOM_LOGIN_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
@@ -175,6 +175,11 @@ class Dh_Custom_Login {
 
 		$this->loader->add_action( 'wp_ajax_nopriv_dhcl_create_account', $plugin_public, 'create_account');
 		$this->loader->add_action( 'wp_ajax_nopriv_login', $plugin_public, 'login');
+
+		add_shortcode('dh_login_form_opening', [$plugin_public, 'login_form_opening']);
+		add_shortcode('dh_login_form_closing', [$plugin_public, 'login_form_closing']);
+		add_shortcode('dh_login_username_input', [$plugin_public, 'login_username_input']);
+		add_shortcode('dh_login_password_input', [$plugin_public, 'login_password_input']);
 	}
 
 	/**
