@@ -14,13 +14,18 @@ class DH_Login_Shortcodes {
     public function login_form_opening($atts)
     {
         $vals = shortcode_atts(array(
-            'action' => esc_url(site_url('wp-login.php', 'login_post')),
+            'action' => '/wp-admin/admin-ajax.php?action=dhcl_login',
             'name' => 'loginform',
             'id' => 'login-form',
             'class' => '',
         ), $atts);
 
-        return '<form method="POST" action="' . esc_attr($vals['action']) . '" name="' . esc_attr($vals['name']) . '" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '">';
+        $form_tag = '<form method="POST" action="' . esc_attr($vals['action']) . '" name="' . esc_attr($vals['name']) . '" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '">';
+        $nonce = wp_nonce_field('dh_custom_login', '_wpnonce', true, false);
+
+        $final = $form_tag . $nonce;
+
+        return $final;
     }
 
     public function login_form_closing($atts)
@@ -41,7 +46,7 @@ class DH_Login_Shortcodes {
             'class' => '',
         ), $atts);
 
-        return '<input type="text" name="log" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '" />';
+        return '<input type="text" name="usernameOrEmail" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '" />';
     }
 
     // returns the input field for the password
@@ -53,7 +58,7 @@ class DH_Login_Shortcodes {
             'class' => '',
         ), $atts);
 
-        return '<input type="password" name="pwd" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '" />';
+        return '<input type="password" name="pass" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '" />';
     }
 
     public function login_redirect_input($partial_url)

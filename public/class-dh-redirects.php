@@ -22,12 +22,15 @@ class DH_Redirects {
 
         // if we are logging out, return
         $request = parse_url($_SERVER['REQUEST_URI']);
-        //var_dump($request);
         if (array_key_exists('query', $request) && strpos($request["query"], 'action=logout') !== false) {
+            // if you are looking at this because you're being redirected to 404 page after logging out,
+            // remember to set you logout link redirect link to something else when you output it.
+            // for example, the home url.
+            // echo wp_logout_url(home_url())
             return;
         }
 
-        // check whether going to signup page and whether it's enabled
+        // check whether going to non allowed pages
         if (
             strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-signup') !== false // check if wp-signup is in request uri
             || strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-activate') !== false

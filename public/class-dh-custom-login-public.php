@@ -2,7 +2,8 @@
 
 require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-login-shortcodes.php';
 require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-registration-shortcodes.php';
-require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-registration.php';
+require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-registration-endpoint.php';
+require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-login-endpoint.php';
 require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-dh-redirects.php';
 
 /**
@@ -52,7 +53,10 @@ class Dh_Custom_Login_Public {
 	public $registration_shortcodes;
 
 	// my class, has ajax function for creating user
-	public $dh_custom_registration;
+	public $dh_custom_registration_endpoint;
+
+	// my class, has ajax function for loging in
+	public $dh_custom_login_endpoint;
 
 	// my class with redirection code for wp-login
 	public $dh_redirects;
@@ -70,7 +74,8 @@ class Dh_Custom_Login_Public {
 		$this->version = $version;
 		$this->login_shortcodes = new DH_Login_Shortcodes();
 		$this->registration_shortcodes = new DH_Registration_Shortcodes();
-		$this->dh_custom_registration = new DH_Custom_Registration();
+		$this->dh_custom_registration_endpoint = new DH_Custom_Registration();
+		$this->dh_custom_login_endpoint = new DH_Custom_Login_Endpoint();
 		$this->dh_redirects = new DH_Redirects();
 	}
 
