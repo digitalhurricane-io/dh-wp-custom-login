@@ -191,6 +191,7 @@ class Dh_Custom_Login {
 		// register shortcodes
 		add_shortcode('dh_registration_form_opening', [$plugin_public->registration_shortcodes, 'form_opening']);
 		add_shortcode('dh_registration_username_input', [$plugin_public->registration_shortcodes, 'username_input']);
+		add_shortcode('dh_registration_email_input', [$plugin_public->registration_shortcodes, 'email_input']);
 		add_shortcode('dh_registration_password_input', [$plugin_public->registration_shortcodes, 'password_input']);
 		add_shortcode('dh_registration_form_closing', [$plugin_public->registration_shortcodes, 'form_closing']);
 	}

@@ -20,6 +20,13 @@ class DH_Redirects {
     public function hide_wp_login()
     {
 
+        // if we are logging out, return
+        $request = parse_url($_SERVER['REQUEST_URI']);
+        //var_dump($request);
+        if (array_key_exists('query', $request) && strpos($request["query"], 'action=logout') !== false) {
+            return;
+        }
+
         // check whether going to signup page and whether it's enabled
         if (
             strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-signup') !== false // check if wp-signup is in request uri

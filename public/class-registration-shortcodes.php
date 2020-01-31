@@ -25,7 +25,17 @@ class DH_Registration_Shortcodes {
             'class' => '',
         ], $atts);
 
-        return '<input type="text" name="user_login" id="'. esc_attr($vals['id']) .'" class="'. esc_attr($vals['class']) .'" autocapitalize="off" />';
+        return '<input type="text" name="username" id="'. esc_attr($vals['id']) .'" class="'. esc_attr($vals['class']) .'" autocapitalize="off" />';
+    }
+
+    public function email_input($atts)
+    {
+        $vals = shortcode_atts([
+            'id' => 'email',
+            'class' => '',
+        ], $atts);
+
+        return '<input type="text" name="email" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '" autocapitalize="off" />';
     }
 
     public function password_input($atts) {
@@ -34,7 +44,7 @@ class DH_Registration_Shortcodes {
             'class' => '',
         ], $atts);
 
-        return '<input type="email" name="user_email" id="'. esc_attr($vals['id']) .'" class="'. esc_attr($vals['class']) .'" />';
+        return '<input type="password" name="password" id="'. esc_attr($vals['id']) .'" class="'. esc_attr($vals['class']) .'" />';
     }
 
     public function form_closing($atts) {

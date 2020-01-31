@@ -16,21 +16,16 @@ class DH_Custom_Registration {
 			wp_send_json_error(["error" => "Registration is closed"]);
 		};
 
-		if ( !isset($_POST['username'], $_POST['email'], $_POST['pass'], $_POST['confirm_pass'])) {
+		if ( !isset($_POST['username'], $_POST['email'], $_POST['password'])) {
 			wp_send_json_error(["error" => "Form filled incorrectly"]);
 		}
 
 		$username = sanitize_text_field($_POST['username']);
 		$email = sanitize_email($_POST['email']);
-		$pass = sanitize_text_field($_POST['pass']);
-		$confirm_pass = sanitize_text_field($_POST['confirm_pass']);
+		$pass = sanitize_text_field($_POST['password']);
 
 		if (username_exists($username) || email_exists($email)) {
 			wp_send_json_error(['error' => 'Username or email exists']);
-		}
-
-		if ($pass != $confirm_pass) {
-			wp_send_json_error(['error' => 'Passwords do not match']);
 		}
 
 		if (!is_email($email)) {
@@ -57,7 +52,7 @@ class DH_Custom_Registration {
 		wp_set_auth_cookie($user_id);
 
 		do_action('wp_login', $user->user_login, $user);
-		
-		wp_send_json_success();
+        
+        wp_safe_redirect(home_url());
 	}
 }
