@@ -6,11 +6,17 @@ class DH_Registration_Shortcodes {
         $vals = shortcode_atts([
             'id' => 'registerform',
             'class' => '',
+            'action' => '/wp-admin/admin-ajax.php?action=dhcl_create_account',
         ], $atts);
 
-        $action_url = esc_url(site_url('wp-login.php?action=register', 'login_post'));
+        //$action_url = esc_url(site_url('wp-login.php?action=register', 'login_post'));
+        $form_tag = '<form name="registerform" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '" action="' . esc_attr($vals['action']) . '" method="post" novalidate="novalidate">';
+        // last arg prevents echoing
+        $nonce = wp_nonce_field('dh_custom_registration', '_wpnonce', true, false);
 
-        return '<form name="registerform" id="'. esc_attr($vals['id']) .'" class="'. esc_attr($vals['class']) .'" action="'. $action_url .'" method="post" novalidate="novalidate">';
+        $final = $form_tag . $nonce;
+
+        return $final;
     }
 
     public function username_input($atts) {

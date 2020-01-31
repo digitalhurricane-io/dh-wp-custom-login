@@ -173,19 +173,22 @@ class Dh_Custom_Login {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		$this->loader->add_action( 'wp_ajax_nopriv_dhcl_create_account', $plugin_public, 'create_account');
-		$this->loader->add_action( 'wp_ajax_nopriv_login', $plugin_public, 'login');
+		// custom registration
+		$this->loader->add_action( 'wp_ajax_nopriv_dhcl_create_account', $plugin_public->dh_custom_registration, 'create_account');
 
-		$this->loader->add_action('plugins_loaded', $plugin_public, 'plugins_loaded');
-		$this->loader->add_filter('site_option_welcome_email', $plugin_public, 'welcome_email');
-		$this->loader->add_action('template_redirect', $plugin_public, 'wps_hide_login_redirect_page_email_notif_woocommerce');
-		$this->loader->add_filter('user_request_action_email_content', $plugin_public, 'user_request_action_email_content', 999, 2);
+		// redirects for wp-login.php etc
+		$this->loader->add_action('plugins_loaded', $plugin_public->dh_redirects, 'plugins_loaded');
+		$this->loader->add_filter('site_option_welcome_email', $plugin_public->dh_redirects, 'welcome_email');
+		$this->loader->add_action('template_redirect', $plugin_public->dh_redirects, 'wps_hide_login_redirect_page_email_notif_woocommerce');
+		$this->loader->add_filter('user_request_action_email_content', $plugin_public->dh_redirects, 'user_request_action_email_content', 999, 2);
 
+		// login shortcodes
 		add_shortcode('dh_login_form_opening', [$plugin_public->login_shortcodes, 'login_form_opening']);
 		add_shortcode('dh_login_form_closing', [$plugin_public->login_shortcodes, 'login_form_closing']);
 		add_shortcode('dh_login_username_input', [$plugin_public->login_shortcodes, 'login_username_input']);
 		add_shortcode('dh_login_password_input', [$plugin_public->login_shortcodes, 'login_password_input']);
 
+		// register shortcodes
 		add_shortcode('dh_registration_form_opening', [$plugin_public->registration_shortcodes, 'form_opening']);
 		add_shortcode('dh_registration_username_input', [$plugin_public->registration_shortcodes, 'username_input']);
 		add_shortcode('dh_registration_password_input', [$plugin_public->registration_shortcodes, 'password_input']);
