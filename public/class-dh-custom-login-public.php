@@ -130,15 +130,16 @@ class Dh_Custom_Login_Public {
 	public function conditionally_disable_wpautop($content) {
 
 		// check if it's the login or signup page
-		if (
-			strpos(rawurldecode($_SERVER['REQUEST_URI']), 'login') !== false 
-			|| strpos(rawurldecode($_SERVER['REQUEST_URI']), 'signup') !== false
+		$request = parse_url($_SERVER['REQUEST_URI']);
+		if (array_key_exists('path', $request) 
+			&& (untrailingslashit($request['path']) === '/login'
+			|| untrailingslashit($request['path']) === '/signup')
 		) {
 			remove_filter('the_content', 'wpautop');
 			remove_filter('the_excerpt', 'wpautop');
 		 }
 
-		 return $content;
+		return $content;
 	}
 	
 }
