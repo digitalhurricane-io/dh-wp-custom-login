@@ -13,17 +13,21 @@ class DH_Login_Shortcodes {
 
     public function login_form_opening($atts)
     {
-        $vals = shortcode_atts(array(
+        $original = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
+
+        $mergedAtts = array_merge(array(
             'action' => '/wp-admin/admin-ajax.php?action=dhcl_login',
             'name' => 'loginform',
             'id' => 'login-form',
-            'class' => '',
-        ), $atts);
+        ), $original);
 
-        $form_tag = '<form method="POST" action="' . esc_attr($vals['action']) . '" name="' . esc_attr($vals['name']) . '" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '">';
+        //$form_tag = '<form method="POST" action="' . esc_attr($vals['action']) . '" name="' . esc_attr($vals['name']) . '" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '">';
+        $startHtml = '<form method="POST" ';
+        $endHtml = '>';
+
         $nonce = wp_nonce_field('dh_custom_login', '_wpnonce', true, false);
 
-        $final = $form_tag . $nonce;
+        $final = $this->set_attributes($startHtml, $endHtml, $mergedAtts) . $nonce;
 
         return $final;
     }
@@ -43,24 +47,32 @@ class DH_Login_Shortcodes {
     // takes shortcode atts of id and a space separated class list
     public function login_username_input($atts)
     {
-        $vals = shortcode_atts(array(
-            'id' => 'username',
-            'class' => '',
-        ), $atts);
+        $original = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
 
-        return '<input type="text" name="usernameOrEmail" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '" />';
+        $mergedAtts = array_merge(array(
+            'id' => 'username',
+        ), $original);
+
+        $startHtml = '<input type="text" name="usernameOrEmail"';
+        $endHtml = '/>';
+
+        return $this->set_attributes($startHtml, $endHtml, $mergedAtts);
     }
 
     // returns the input field for the password
     // takes shortcode atts of id and a space separated class list
     public function login_password_input($atts)
     {
-        $vals = shortcode_atts(array(
-            'id' => 'password',
-            'class' => '',
-        ), $atts);
+        $original = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
 
-        return '<input type="password" name="pass" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '" />';
+        $mergedAtts = array_merge(array(
+            'id' => 'password',
+        ), $original);
+
+        $startHtml = '<input type="password" name="pass"';
+        $endHtml = '/>';
+
+        return $this->set_attributes($startHtml, $endHtml, $mergedAtts);
     }
 
     public function login_redirect_input($url)
@@ -77,8 +89,14 @@ class DH_Login_Shortcodes {
         return '<input type="hidden" name="testcookie" value="1" />';
     }
 
-    public function set_attributes($html, $atts) {
-
+    /**
+     * Takes any attributes passed in the shortcode, and sets them on the html element
+     */
+    public function set_attributes($startHtml, $endHtml, $atts) {
+        foreach($atts as $key => $val) {
+            $startHtml = $startHtml . ' ' . esc_attr($key) . '="' . esc_attr($val) . '"';
+        }
+        return $startHtml . ' ' . $endHtml;
     }
 
 }

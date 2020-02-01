@@ -9,9 +9,13 @@ Add the minimal code.
 
 Style and markup as you like.
 
-ids and classes can be set on the shortcodes and will be set in the outputted html.
+All shortcode attributes will be passed through and set as html attributes in the underlying html elements.
+
+For example, ids and classes.
 
 [dh_registration_username_input id="username-input" class="class1 class2"]
+
+The exception to this rule is for the redirect url.
 
 You can set the url where the user will be redirected after a successful login 
 by setting the shortcode attribute relative_redirect_url="/my-url" on the form_closing shortcode
