@@ -53,3 +53,149 @@ minimal shortcodes / html needed to create custom registration form
 [dh_registration_form_closing relative_redirect_url="/"]
 
 -----------------------------------
+
+Bootstrap sample login
+-----------------------------------
+<style>
+
+.login-form-element {
+    min-height: 47px;
+}
+
+.login-form-wrapper {
+    padding: 0 30px 10px 30px;
+    max-width: 460px;
+    background: #222B45;
+}
+
+.login-title {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.login-button {
+    margin-top: 18px;
+    margin-bottom: 20px;
+    height: 60px;
+    font-size: 24px;
+}
+
+.dh-login-links {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 15px;
+}
+
+.signup-button {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    height: 60px;
+    font-size: 24px;
+}
+
+</style>
+
+<div class="row justify-content-center">
+    <div class="login-form-wrapper col-sm card">
+
+        <h1 class="login-title">Login</h1>
+
+        [dh_login_form_opening]
+
+            <div class="form-group">
+                <label>Username</label>
+                [dh_login_username_input class="form-control login-form-element" placeholder="Username"]
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                [dh_login_password_input class="form-control login-form-element" placeholder="Password"]
+            </div>
+
+            <a href="" class="dh-forgot-pass-link">Forgot Password?</a>
+
+            <button type="submit" class="login-form-element btn btn-success btn-block login-button">Login</button>
+
+        [dh_login_form_closing relative_redirect_url="/"]
+
+        <div class="row justify-content-center dh-login-links">
+	        <a href="" class="dh-sign-up-link">Sign Up</a>
+        </div>
+</div>
+
+    </div>
+</div>
+
+-----------------------------
+
+Bootstrap sample registration
+-----------------------------------
+
+<style>
+
+.login-form-element {
+    min-height: 47px;
+}
+
+.login-form-wrapper {
+    padding: 0 30px 10px 30px;
+    max-width: 460px;
+    background: #222B45;
+}
+
+.login-title {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.login-button {
+    margin-top: 18px;
+    margin-bottom: 20px;
+    height: 60px;
+    font-size: 24px;
+}
+
+.dh-login-links {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 15px;
+}
+
+.signup-button {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    height: 60px;
+    font-size: 24px;
+}
+
+</style>
+
+<div class="row justify-content-center">
+    <div class="login-form-wrapper col-sm card">
+        <h1 class="login-title">Sign Up</h1>
+
+        [dh_registration_form_opening]
+
+            <div class="form-group">
+                <label>Email</label>
+                [dh_registration_email_input class="form-control login-form-element" placeholder="Email"]
+            </div>
+
+            <div class="form-group">
+                <label>Username</label>
+                [dh_registration_username_input class="form-control login-form-element" placeholder="Username"]
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                [dh_registration_password_input class="form-control login-form-element" placeholder="Password"]
+            </div>
+
+            <button type="submit" class="login-form-element btn btn-success btn-block signup-button">Sign Up</button>
+
+        [dh_registration_form_closing relative_redirect_url="/"]
+
+    </div>
+</div>
