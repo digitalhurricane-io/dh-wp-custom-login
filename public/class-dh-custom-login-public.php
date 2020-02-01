@@ -124,5 +124,27 @@ class Dh_Custom_Login_Public {
 		wp_enqueue_script( $this->dh_custom_login, plugin_dir_url( __FILE__ ) . 'js/dh-custom-login-public.js', array( 'jquery' ), $this->version, false );
 
 	}
+
+	// disable auto insertion of <p> tags by wordpress
+	// if we are on login or signup pages
+	public function conditionally_disable_wpautop($content) {
+
+		// check if it's the login or signup page
+		if (
+			strpos(rawurldecode($_SERVER['REQUEST_URI']), 'login') !== false 
+			|| strpos(rawurldecode($_SERVER['REQUEST_URI']), 'signup') !== false
+		) {
+			remove_filter('the_content', 'wpautop');
+			remove_filter('the_excerpt', 'wpautop');
+			add_filter('the_content', function ($pee) {
+				return wpautop($pee, false);
+			});
+			add_filter('the_excerpt', function ($pee) {
+				return wpautop($pee, false);
+			});
+		 }
+
+		 return $content;
+	}
 	
 }

@@ -177,6 +177,9 @@ class Dh_Custom_Login {
 		$this->loader->add_action('wp_ajax_nopriv_dhcl_create_account', $plugin_public->dh_custom_registration_endpoint, 'create_account');
 		$this->loader->add_action('wp_ajax_nopriv_dhcl_login', $plugin_public->dh_custom_login_endpoint, 'login');
 
+		// disable auto insertion of <p> tags by wordpress
+		$this->loader->add_filter('the_content', $plugin_public, 'conditionally_disable_wpautop', 9);
+
 		// redirects for wp-login.php etc
 		$this->loader->add_action('plugins_loaded', $plugin_public->dh_redirects, 'plugins_loaded');
 		$this->loader->add_filter('site_option_welcome_email', $plugin_public->dh_redirects, 'welcome_email');

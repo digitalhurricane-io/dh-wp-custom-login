@@ -22,7 +22,7 @@ by setting the shortcode attribute relative_redirect_url="/my-url" on the form_c
 
 Also, when the plugin is activated wp-login.php will redirect to a 404.
 
-
+Also, auto insertion of <p> tags will be disabled if 'login' or 'signup' is in the url.
 
 
 minimal shortcodes / html needed to create custom login form
