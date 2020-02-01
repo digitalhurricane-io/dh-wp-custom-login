@@ -136,12 +136,6 @@ class Dh_Custom_Login_Public {
 		) {
 			remove_filter('the_content', 'wpautop');
 			remove_filter('the_excerpt', 'wpautop');
-			add_filter('the_content', function ($pee) {
-				return wpautop($pee, false);
-			});
-			add_filter('the_excerpt', function ($pee) {
-				return wpautop($pee, false);
-			});
 		 }
 
 		 return $content;
