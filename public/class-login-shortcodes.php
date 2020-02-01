@@ -30,11 +30,13 @@ class DH_Login_Shortcodes {
 
     public function login_form_closing($atts)
     {
-        $vals = shortcode_atts(array(
-            'partial_redirect_url' => '/wp-admin/'
-        ), $atts);
 
-        return $this->login_redirect_input(esc_attr($vals['partial_redirect_url'])) . $this->login_test_cookie_input() . '</form>';
+        $redirect_url = home_url();
+        if (isset($atts['relative_redirect_url'])) {
+            $redirect_url = home_url(esc_attr($atts['relative_redirect_url']));
+        }
+
+        return $this->login_redirect_input($redirect_url) . $this->login_test_cookie_input() . '</form>';
     }
 
     // returns the input field for the username
@@ -61,18 +63,22 @@ class DH_Login_Shortcodes {
         return '<input type="password" name="pass" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '" />';
     }
 
-    public function login_redirect_input($partial_url)
+    public function login_redirect_input($url)
     {
 
-        $base_url = esc_url(site_url());
-        $full_url = $base_url . $partial_url;
+        // $base_url = esc_url(site_url());
+        // $full_url = $base_url . $partial_url;
 
-        return '<input type="hidden" name="redirect_to" value="' . $full_url . '" />';
+        return '<input type="hidden" name="redirect_to" value="' . $url . '" />';
     }
 
     public function login_test_cookie_input()
     {
         return '<input type="hidden" name="testcookie" value="1" />';
+    }
+
+    public function set_attributes($html, $atts) {
+
     }
 
 }

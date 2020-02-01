@@ -3,6 +3,13 @@
 
 class DH_Custom_Login_Endpoint {
 
+    private $redirect_to;
+
+    function __construct()
+    {
+        $this->redirect_to = home_url();
+    }
+
     public function login()
     {
         $nonce = isset($_POST['_wpnonce']) ? $_POST['_wpnonce'] : '';
@@ -15,6 +22,7 @@ class DH_Custom_Login_Endpoint {
             wp_send_json_error(["error" => "Username or email not provided"]);
         }
 
+        $this->redirect_to = $_POST['redirect_to'];
         $usernameOrEmail = $_POST['usernameOrEmail'];
         $pass = sanitize_text_field($_POST['pass']);
 
@@ -60,7 +68,7 @@ class DH_Custom_Login_Endpoint {
             wp_send_json_error();
         }
 
-        wp_safe_redirect(home_url());
+        wp_safe_redirect($this->redirect_to);
         die();
     }
 

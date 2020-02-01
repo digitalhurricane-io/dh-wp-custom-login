@@ -13,6 +13,9 @@ ids and classes can be set on the shortcodes and will be set in the outputted ht
 
 [dh_registration_username_input id="username-input" class="class1 class2"]
 
+You can set the url where the user will be redirected after a successful login 
+by setting the shortcode attribute relative_redirect_url="/my-url" on the form_closing shortcode
+
 Also, when the plugin is activated wp-login.php will redirect to a 404.
 
 
@@ -28,7 +31,7 @@ minimal shortcodes / html needed to create custom login form
 
 <button type="submit">Login</button>  
 
-[dh_login_form_closing]  
+[dh_login_form_closing relative_redirect_url="/"]  
 
 -----------------------------------
 
@@ -43,6 +46,6 @@ minimal shortcodes / html needed to create custom registration form
 
 <button type="submit">Register</button>
 
-[dh_registration_form_closing]
+[dh_registration_form_closing relative_redirect_url="/"]
 
 -----------------------------------
