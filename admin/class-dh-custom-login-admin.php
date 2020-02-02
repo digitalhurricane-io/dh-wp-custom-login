@@ -206,7 +206,7 @@ class Dh_Custom_Login_Admin {
 				'uid' => 'awesome_checkboxes',
 				'label' => 'Sample Checkboxes',
 				'section' => 'our_first_section',
-				'type' => 'checkbox',
+				'type' => 'multi_checkbox',
 				'options' => array(
 					'option1' => 'Option 1',
 					'option2' => 'Option 2',
@@ -215,85 +215,29 @@ class Dh_Custom_Login_Admin {
 					'option5' => 'Option 5',
 				),
 				'default' => array()
+			),
+			array(
+				'uid' => 'awesome_checkboxes2',
+				'label' => 'Sample Checkboxes2',
+				'section' => 'our_first_section',
+				'type' => 'single_checkbox',
+				'default' => 0,
 			)
 		);
 		foreach ($fields as $field) {
 
-			add_settings_field($field['uid'], $field['label'], array($this, 'field_callback'), 'dh_custom_login', $field['section'], $field);
-			register_setting('dh_custom_login', $field['uid']);
-		}
-	}
-
-	// output fields
-	public function field_callback( $arguments ) {
-		//echo var_dump($arguments);
-		
-		$uid = $arguments['uid'];
-		$default = isset($arguments['default']) ? $arguments['default'] : '';
-		$placeholder = isset($arguments['placeholder']) ? $arguments['placeholder'] : '';
-
-		$value = get_option($uid, $default);
-
-        switch( $arguments['type'] ){
-            case 'text':
-            case 'password':
-            case 'number':
-                printf( '<input name="%1$s" id="%1$s" type="%2$s" placeholder="%3$s" value="%4$s" />', $arguments['uid'], $arguments['type'], $placeholder, $value );
-                break;
-            case 'textarea':
-                printf( '<textarea name="%1$s" id="%1$s" placeholder="%2$s" rows="5" cols="50">%3$s</textarea>', $arguments['uid'], $placeholder, $value );
-                break;
-            case 'select':
-            case 'multiselect':
-                if( ! empty ( $arguments['options'] ) && is_array( $arguments['options'] ) ){
-                    $attributes = '';
-                    $options_markup = '';
-                    foreach( $arguments['options'] as $key => $label ){
-
-                        $options_markup .= sprintf( 
-							'<option value="%s" %s>%s</option>', 
-							$key, 
-							selected( 
-								$value, 
-								$key, 
-								false 
-							), 
-							$label 
-						);
-                    }
-                    if( $arguments['type'] === 'multiselect' ){
-                        $attributes = ' multiple="multiple" ';
-                    }
-                    printf( '<select name="%1$s" id="%1$s" %2$s>%3$s</select>', $arguments['uid'], $attributes, $options_markup );
-                }
-                break;
-            case 'radio':
-            case 'checkbox':
-                if( ! empty ( $arguments['options'] ) && is_array( $arguments['options'] ) ){
-                    $options_markup = '';
-                    $iterator = 0;
-                    foreach( $arguments['options'] as $key => $label ){
-                        $iterator++;
-                        $options_markup .= sprintf( '<label for="%1$s_%6$s"><input id="%1$s_%6$s" name="%1$s" type="%2$s" value="%3$s" %4$s /> %5$s</label><br/>', $arguments['uid'], $arguments['type'], $key, checked( $value, $key, false ), $label, $iterator );
-                    }
-                    printf( '<fieldset>%s</fieldset>', $options_markup );
-                }
-                break;
-		}
-
-		if (isset($arguments['helper'])) {
-			$helper = $arguments['helper'];
-			printf('<span class="helper"> %s</span>', $helper);
-		}
-
-		if (isset($arguments['supplimental'])) {
-			$supplimental = $arguments['supplimental'];
-			printf('<p class="description">%s</p>', $supplimental);
+			add_settings_field($field['uid'], $field['label'], 'dhcl_output_admin_field', 'dh_custom_login', $field['section'], $field);
+			if ($field['type'] == 'single_checkbox') {
+				register_setting('dh_custom_login', $field['uid'], 'dhcl_admin_single_checkbox_sanitizer');
+			} else {
+				register_setting('dh_custom_login', $field['uid']);
+			}
+			
 		}
 	}
 
 	public function section_callback() {
-		echo 'hello world';
+		// this is the section callback. Not doing anything with it. I'll leave it for now.
 	}
 	
 }
