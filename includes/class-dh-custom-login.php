@@ -122,6 +122,13 @@ class Dh_Custom_Login {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-dh-custom-login-public.php';
 
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/plugin-settings.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-login-shortcodes.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-registration-shortcodes.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-registration-endpoint.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-login-endpoint.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-dh-redirects.php';
+
 		$this->loader = new Dh_Custom_Login_Loader();
 
 	}
@@ -156,6 +163,8 @@ class Dh_Custom_Login {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_admin_page');
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'setup_admin_page_sections');
 
 	}
 

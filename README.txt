@@ -24,6 +24,9 @@ Also, when the plugin is activated wp-login.php will redirect to a 404.
 
 Also, auto insertion of <p> tags will be disabled if the page slug is 'login' or 'signup'.
 
+Not implemented yet, but form page for password reset email url will be /password-reset-email
+Not implemented yet, but form page for entering new password will be /reset-password
+
 
 
 minimal shortcodes / html needed to create custom login form

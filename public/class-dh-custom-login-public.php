@@ -1,10 +1,5 @@
 <?php
 
-require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-login-shortcodes.php';
-require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-registration-shortcodes.php';
-require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-registration-endpoint.php';
-require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-login-endpoint.php';
-require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-dh-redirects.php';
 
 /**
  * The public-facing functionality of the plugin.
@@ -126,14 +121,16 @@ class Dh_Custom_Login_Public {
 	}
 
 	// disable auto insertion of <p> tags by wordpress
-	// if we are on login or signup pages
+	// if we are on any of our custom pages
 	public function conditionally_disable_wpautop($content) {
 
 		// check if it's the login or signup page
 		$request = parse_url($_SERVER['REQUEST_URI']);
 		if (array_key_exists('path', $request) 
 			&& (untrailingslashit($request['path']) === '/login'
-			|| untrailingslashit($request['path']) === '/signup')
+			|| untrailingslashit($request['path']) === '/signup'
+			|| untrailingslashit($request['path']) === '/password-reset-email'
+			|| untrailingslashit($request['path']) === '/reset-password')
 		) {
 			remove_filter('the_content', 'wpautop');
 			remove_filter('the_excerpt', 'wpautop');
