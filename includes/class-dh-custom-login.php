@@ -122,7 +122,7 @@ class Dh_Custom_Login {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-dh-custom-login-public.php';
 
-		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/plugin-settings.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/plugin-settings-template-callback.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/admin-field-outputter.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-login-shortcodes.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-registration-shortcodes.php';

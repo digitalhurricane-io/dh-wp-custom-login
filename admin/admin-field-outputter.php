@@ -29,7 +29,7 @@ function dhcl_output_admin_field( $arguments ) {
         case 'text':
         case 'password':
         case 'number':
-            printf( '<input name="%1$s" id="%1$s" type="%2$s" placeholder="%3$s" value="%4$s" />', $arguments['uid'], $arguments['type'], $placeholder, $value );
+            printf( '/<input name="%1$s" id="%1$s" type="%2$s" placeholder="%3$s" value="%4$s" />', $arguments['uid'], $arguments['type'], $placeholder, $value );
             break;
         case 'textarea':
             printf( '<textarea name="%1$s" id="%1$s" placeholder="%2$s" rows="5" cols="50">%3$s</textarea>', $arguments['uid'], $placeholder, $value );
@@ -86,6 +86,9 @@ function dhcl_output_admin_field( $arguments ) {
             $options_markup = sprintf('<label for="%1$s"><input id="%1$s" name="%1$s" type="%2$s" value="%3$s" %4$s /></label><br/>', $arguments['uid'], 'checkbox', '1', checked('1', $value, false));
             printf('<fieldset>%s</fieldset>', $options_markup);
 
+            break;
+        case 'ajax_button': // outputs a button that will be used with ajax
+            printf('<button id="%s" class="button button-primary">%s</button>', $arguments['uid'], $arguments['label']);
             break;
     }
 

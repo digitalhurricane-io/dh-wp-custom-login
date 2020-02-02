@@ -30,7 +30,20 @@ class Dh_Custom_Login_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+		$activator = new self;
+		$activator->add_default_settings();
 	}
 
+	public function add_default_settings() {
+		// slugs
+		add_option('dhcl_login_slug', 'login');
+		add_option('dhcl_signup_slug', 'signup');
+		add_option('dhcl_password_reset_email_slug', 'password-reset-email');
+		add_option('dhcl_reset_password_slug', 'reset-password');
+
+		// other
+		add_option('dhcl_enqueue_bootstrap', '0');
+		add_option('dhcl_enqueue_css', '1');
+		add_option('dhcl_enabled', '0');
+	}
 }

@@ -124,104 +124,79 @@ class Dh_Custom_Login_Admin {
 	}
 
 	public function setup_admin_page_sections() {
-		add_settings_section('our_first_section', 'My First Section Title', array($this, 'section_callback'), 'dh_custom_login');
-		add_settings_section('our_second_section', 'My Second Section Title', array($this, 'section_callback'), 'dh_custom_login');
-		add_settings_section('our_third_section', 'My Third Section Title', array($this, 'section_callback'), 'dh_custom_login');
+		add_settings_section('dhcl_slug_section', 'Page Slugs', array($this, 'section_callback'), 'dh_custom_login');
+		add_settings_section('dhcl_other_section', 'Other', array($this, 'section_callback'), 'dh_custom_login');
 
 		$this->setup_admin_page_fields();
 	}
 
 	public function setup_admin_page_fields() {
+		// default options are set in plugin activator
+		// the defaults set here will never actually be used if 
+		// there is a default set in the activator function
+
 		$fields = array(
 			array(
-				'uid' => 'awesome_text_field',
-				'label' => 'Sample Text Field',
-				'section' => 'our_first_section',
+				'uid' => 'dhcl_login_slug',
+				'label' => 'Login Page',
+				'section' => 'dhcl_slug_section',
 				'type' => 'text',
-				'placeholder' => 'Some text',
-				'helper' => 'Does this help?',
-				'supplimental' => 'I am underneath!',
+				'supplimental' => 'Slug you will use for your login page.',
 			),
 			array(
-				'uid' => 'awesome_password_field',
-				'label' => 'Sample Password Field',
-				'section' => 'our_first_section',
-				'type' => 'password',
+				'uid' => 'dhcl_signup_slug',
+				'label' => 'Sign up page',
+				'section' => 'dhcl_slug_section',
+				'type' => 'text',
+				'supplimental' => 'Slug you will use for your signup page.',
 			),
 			array(
-				'uid' => 'awesome_number_field',
-				'label' => 'Sample Number Field',
-				'section' => 'our_first_section',
-				'type' => 'number',
+				'uid' => 'dhcl_password_reset_email_slug',
+				'label' => 'Password Reset Request',
+				'section' => 'dhcl_slug_section',
+				'type' => 'text',
+				'supplimental' => 'Page where the password reset email request form will be.',
 			),
 			array(
-				'uid' => 'awesome_textarea',
-				'label' => 'Sample Text Area',
-				'section' => 'our_first_section',
-				'type' => 'textarea',
+				'uid' => 'dhcl_reset_password_slug',
+				'label' => 'Reset Password',
+				'section' => 'dhcl_slug_section',
+				'type' => 'text',
+				'supplimental' => 'Page where user will enter their new password after clicking on link in reset email.',
 			),
+
+
 			array(
-				'uid' => 'awesome_select',
-				'label' => 'Sample Select Dropdown',
-				'section' => 'our_first_section',
-				'type' => 'select',
-				'options' => array(
-					'option1' => 'Option 1',
-					'option2' => 'Option 2',
-					'option3' => 'Option 3',
-					'option4' => 'Option 4',
-					'option5' => 'Option 5',
-				),
-				'default' => array()
-			),
-			array(
-				'uid' => 'awesome_multiselect',
-				'label' => 'Sample Multi Select',
-				'section' => 'our_first_section',
-				'type' => 'multiselect',
-				'options' => array(
-					'option1' => 'Option 1',
-					'option2' => 'Option 2',
-					'option3' => 'Option 3',
-					'option4' => 'Option 4',
-					'option5' => 'Option 5',
-				),
-				'default' => array()
-			),
-			array(
-				'uid' => 'awesome_radio',
-				'label' => 'Sample Radio Buttons',
-				'section' => 'our_first_section',
-				'type' => 'radio',
-				'options' => array(
-					'option1' => 'Option 1',
-					'option2' => 'Option 2',
-					'option3' => 'Option 3',
-					'option4' => 'Option 4',
-					'option5' => 'Option 5',
-				),
-				'default' => array()
-			),
-			array(
-				'uid' => 'awesome_checkboxes',
-				'label' => 'Sample Checkboxes',
-				'section' => 'our_first_section',
-				'type' => 'multi_checkbox',
-				'options' => array(
-					'option1' => 'Option 1',
-					'option2' => 'Option 2',
-					'option3' => 'Option 3',
-					'option4' => 'Option 4',
-					'option5' => 'Option 5',
-				),
-				'default' => array()
-			),
-			array(
-				'uid' => 'awesome_checkboxes2',
-				'label' => 'Sample Checkboxes2',
-				'section' => 'our_first_section',
+				'uid' => 'dhcl_enqueue_bootstrap',
+				'label' => 'Enqueue Bootstrap 4',
+				'section' => 'dhcl_other_section',
 				'type' => 'single_checkbox',
+				'supplimental' => 'Check this if you want this plugin to load bootstrap.',
 				'default' => 0,
+			),
+			array(
+				'uid' => 'dhcl_enqueue_css',
+				'label' => 'Enqueue plugin css',
+				'section' => 'dhcl_other_section',
+				'type' => 'single_checkbox',
+				'supplimental' => 'Check this if you want to load this plugins default css. The default css uses bootstrap.',
+				'default' => 1,
+			),
+			array(
+				'uid' => 'dhcl_enabled',
+				'label' => 'Custom Login Enabled',
+				'section' => 'dhcl_other_section',
+				'type' => 'single_checkbox',
+				'supplimental' => 'Whether to enable this plugins functionality.',
+				'default' => 0,
+			),
+			array(
+				'uid' => 'dhcl_create_pages',
+				'label' => 'Create Pages',
+				'section' => 'dhcl_slug_section',
+				'type' => 'ajax_button',
+				'supplimental' => 'This will create 4 pages using the slugs above and fill them with default content.
+					If the pages already exist, they will be OVERWRITTEN!!'
 			)
 		);
 		foreach ($fields as $field) {
@@ -240,4 +215,25 @@ class Dh_Custom_Login_Admin {
 		// this is the section callback. Not doing anything with it. I'll leave it for now.
 	}
 	
+	// ajax function
+	// will be called in admin when user want to create default pages
+	public function create_default_pages() {
+		$this->check_if_authorized();
+		
+		// https://stackoverflow.com/questions/32314278/how-to-create-a-new-wordpress-page-programmatically
+	}
+
+	/**
+	 * Makes sure user has admin permissions. Also check whether nonce is valid.
+	 */
+	private function check_if_authorized()
+	{
+		// check if user has admin permissions
+		if (!current_user_can('edit_theme_options')) {
+			wp_die(__('Unauthorized', 'dh-custom-login'));
+		}
+
+		// check nonce and kills script if is false
+		check_admin_referer('dhcl_nonce');
+	}
 }

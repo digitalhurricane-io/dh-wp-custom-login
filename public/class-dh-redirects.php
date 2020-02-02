@@ -3,12 +3,12 @@
 class DH_Redirects {
 
     // the url for the login / register page
-    private $new_login_slug;
+    private $login_slug;
 
     public function __construct()
     {
         // IMPORTANT: this is the slug for the login page that you will create in the wordpress admin
-        $this->new_login_slug = 'login';
+        $this->login_slug = get_option('dhcl_login_slug');
     }
 
     public function plugins_loaded()
@@ -47,8 +47,7 @@ class DH_Redirects {
 
     public function welcome_email($value)
     {
-        $login_slug = 'login';
-        return $value = str_replace('wp-login.php', trailingslashit($login_slug, $value));
+        return str_replace('wp-login.php', trailingslashit($this->login_slug), $value);
     }
 
     /**
@@ -69,7 +68,7 @@ class DH_Redirects {
 
     public function user_request_action_email_content($email_text, $email_data)
     {
-        $email_text = str_replace('###CONFIRM_URL###', esc_url_raw(str_replace($this->new_login_slug . '/', 'wp-login.php', $email_data['confirm_url'])), $email_text);
+        $email_text = str_replace('###CONFIRM_URL###', esc_url_raw(str_replace($this->login_slug . '/', 'wp-login.php', $email_data['confirm_url'])), $email_text);
 
         return $email_text;
     }
@@ -79,10 +78,10 @@ class DH_Redirects {
 
         if (get_option('permalink_structure')) {
 
-            return $this->user_trailingslashit(home_url('/', $scheme) . $this->new_login_slug);
+            return $this->user_trailingslashit(home_url('/', $scheme) . $this->login_slug);
         } else {
 
-            return home_url('/', $scheme) . '?' . $this->new_login_slug;
+            return home_url('/', $scheme) . '?' . $this->login_slug;
         }
     }
 

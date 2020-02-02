@@ -126,12 +126,7 @@ class Dh_Custom_Login_Public {
 
 		// check if it's the login or signup page
 		$request = parse_url($_SERVER['REQUEST_URI']);
-		if (array_key_exists('path', $request) 
-			&& (untrailingslashit($request['path']) === '/login'
-			|| untrailingslashit($request['path']) === '/signup'
-			|| untrailingslashit($request['path']) === '/password-reset-email'
-			|| untrailingslashit($request['path']) === '/reset-password')
-		) {
+		if (array_key_exists('path', $request) && $this->page_match($request) ) {
 			remove_filter('the_content', 'wpautop');
 			remove_filter('the_excerpt', 'wpautop');
 		 }
@@ -139,4 +134,17 @@ class Dh_Custom_Login_Public {
 		return $content;
 	}
 	
+	// returns true if we're on one of the target pages
+	public function page_match($request) {
+		$path = untrailingslashit($request['path']);
+
+		$target_paths = [
+			'/'.get_option('dhcl_login_slug'),
+			'/'.get_option('dhcl_signup_slug'),
+			'/'.get_option('dhcl_password_reset_email_slug'),
+			'/'.get_option('dhcl_reset_password_slug')
+		];
+
+		return in_array($path, $target_paths);
+	}
 }
