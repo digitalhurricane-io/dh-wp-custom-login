@@ -131,7 +131,7 @@ class Dh_Custom_Login {
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-dh-redirects.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-pass-email-shortcodes.php';
-		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset-shortcodes.php';
 
 		$this->loader = new Dh_Custom_Login_Loader();
 
