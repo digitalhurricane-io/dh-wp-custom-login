@@ -15,11 +15,11 @@ class DH_Password_Reset
         $errors = new WP_Error();
 
         if (empty($_POST['user_login']) || !is_string($_POST['user_login'])) {
-            $errors->add('empty_username', __('<strong>ERROR</strong>: Enter a username or email address.'));
+            $errors->add('empty_username', __('Enter a username or email address.'));
         } elseif (strpos($_POST['user_login'], '@')) {
             $user_data = get_user_by('email', trim(wp_unslash($_POST['user_login'])));
             if (empty($user_data)) {
-                $errors->add('invalid_email', __('<strong>ERROR</strong>: There is no account with that username or email address.'));
+                $errors->add('invalid_email', __('There is no account with that username or email address.'));
             }
         } else {
             $login     = trim($_POST['user_login']);
@@ -38,12 +38,12 @@ class DH_Password_Reset
         do_action('lostpassword_post', $errors);
 
         if ($errors->has_errors()) {
-            return $errors;
+            wp_send_json_error($errors->get_error_message());
         }
 
         if (!$user_data) {
-            $errors->add('invalidcombo', __('<strong>ERROR</strong>: There is no account with that username or email address.'));
-            return $errors;
+            $errors->add('invalidcombo', __('There is no account with that username or email address.'));
+            wp_send_json_error($errors->get_error_message());
         }
 
         // Redefining user_login ensures we return the right case in the email.
@@ -52,7 +52,7 @@ class DH_Password_Reset
         $key        = get_password_reset_key($user_data);
 
         if (is_wp_error($key)) {
-            return $key;
+            return wp_send_json_error($key->get_error_message());
         }
 
         if (is_multisite()) {
@@ -72,7 +72,8 @@ class DH_Password_Reset
         $message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
         $message .= __('If this was a mistake, just ignore this email and nothing will happen.') . "\r\n\r\n";
         $message .= __('To reset your password, visit the following address:') . "\r\n\r\n";
-        $message .= '<' . network_site_url("reset-password?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . ">\r\n";
+        
+        $message .= '<' . network_site_url( get_option('dhcl_reset_password_slug') . "/?key=$key&login=" . rawurlencode($user_login), 'login') . ">\r\n";
 
         /* translators: Password reset notification email subject. %s: Site title. */
         $title = sprintf(__('[%s] Password Reset'), $site_name);
@@ -107,13 +108,13 @@ class DH_Password_Reset
         if ($message && !wp_mail($user_email, wp_specialchars_decode($title), $message)) {
             $errors->add(
                 'retrieve_password_email_failure',
-                __('<strong>ERROR</strong>: The email could not be sent. Site may not be correctly configured to send emails. Get support for resetting your password</a>.')
+                __('The email could not be sent. Site may not be correctly configured to send emails. Get support for resetting your password.')
             );
 
-            return $errors;
+            wp_send_json_error($errors->get_error_message());
         }
 
-        return true;
+        wp_send_json_success();
     }
 
     // this will be called on reset pass form submission
@@ -183,4 +184,3 @@ class DH_Password_Reset
     }
 }
 
-echo 'it worked';

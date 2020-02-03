@@ -129,6 +129,7 @@ class Dh_Custom_Login {
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-registration-endpoint.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-login-endpoint.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-dh-redirects.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset.php';
 
 		$this->loader = new Dh_Custom_Login_Loader();
 
@@ -198,6 +199,10 @@ class Dh_Custom_Login {
 		$this->loader->add_action('wp_ajax_nopriv_dhcl_create_account', $plugin_public->dh_custom_registration_endpoint, 'create_account');
 		$this->loader->add_action('wp_ajax_nopriv_dhcl_login', $plugin_public->dh_custom_login_endpoint, 'login');
 		$this->loader->add_action('wp_ajax_dhcl_login', $plugin_public->dh_custom_login_endpoint, 'login');
+
+		// custom password reset
+		$this->loader->add_action('wp_ajax_nopriv_dhcl_send_password_reset_email', $plugin_public->password_reset, 'send_password_reset_email');
+		$this->loader->add_action('wp_ajax_nopriv_dhcl_reset_password', $plugin_public->password_reset, 'reset_password');
 
 		// disable auto insertion of <p> tags by wordpress
 		$this->loader->add_filter('the_content', $plugin_public, 'conditionally_disable_wpautop', 9);

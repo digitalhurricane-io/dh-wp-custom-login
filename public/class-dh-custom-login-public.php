@@ -56,6 +56,9 @@ class Dh_Custom_Login_Public {
 	// my class with redirection code for wp-login
 	public $dh_redirects;
 
+	// my class with password reset code
+	public $password_reset;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -72,6 +75,7 @@ class Dh_Custom_Login_Public {
 		$this->dh_custom_registration_endpoint = new DH_Custom_Registration();
 		$this->dh_custom_login_endpoint = new DH_Custom_Login_Endpoint();
 		$this->dh_redirects = new DH_Redirects();
+		$this->password_reset = new DH_Password_Reset();
 	}
 
 	/**
