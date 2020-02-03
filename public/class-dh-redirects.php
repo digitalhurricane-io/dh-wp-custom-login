@@ -30,20 +30,38 @@ class DH_Redirects {
             return;
         }
 
-        // check whether going to non allowed pages
-        if (
-            strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-signup') !== false // check if wp-signup is in request uri
-            || strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-activate') !== false
-            || strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-login') !== false
-            || strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-register') !== false  // check if wp-activate is in request uri
-            || (strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-admin') !== false && !current_user_can('edit_theme_options'))
-        ) {
-
+        if ($this->target_page_match()) {
             // user is trying to go to disallowed page
             // we should 404 them
             wp_safe_redirect(home_url('/404'));
             die();
         }
+    }
+
+    // returns true if we're heading to one of the target pages
+    public function target_page_match()
+    {
+        $request = parse_url($_SERVER['REQUEST_URI']);
+
+        $match = false;
+
+        $path = untrailingslashit($request['path']);
+
+        $target_paths = [
+            '/wp-signup',
+            '/wp-activate',
+            '/wp-login',
+            '/wp-login.php',
+            '/wp-register',
+        ];
+
+        $match = in_array($path, $target_paths);
+
+        if ($path == '/wp-admin' || $path == '/wp-admin.php' && !current_user_can('administrator')) {
+            $match = true;
+        }
+
+        return $match;
     }
 
     public function welcome_email($value)

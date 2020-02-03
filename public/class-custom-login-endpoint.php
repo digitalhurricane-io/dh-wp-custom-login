@@ -43,7 +43,7 @@ class DH_Custom_Login_Endpoint {
 
         if (!$user) {
             // user with that email doesn't exist
-            wp_send_json_error();
+            wp_send_json_error("User with that email doesn't exist");
         }
 
         $username = $user->user_login;
