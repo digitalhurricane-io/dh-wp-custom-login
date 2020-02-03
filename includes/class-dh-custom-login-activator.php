@@ -40,6 +40,7 @@ class Dh_Custom_Login_Activator {
 		add_option('dhcl_signup_slug', 'signup');
 		add_option('dhcl_password_reset_email_slug', 'password-reset-email');
 		add_option('dhcl_reset_password_slug', 'reset-password');
+		add_option('dhcl_already_logged_in_redirect', '');
 
 		// other
 		add_option('dhcl_enqueue_bootstrap', '0');

@@ -14,6 +14,34 @@ class DH_Redirects {
     public function plugins_loaded()
     {
         $this->hide_wp_login();
+        $this->already_logged_in_redirect();
+    }
+
+    // if the user is logged in, and they try to visit login page or signup page,
+    // they will be redirected to a page specified in admin settings
+    public function already_logged_in_redirect() {
+
+        if (is_user_logged_in()) {
+
+            $requestUri = $_SERVER['REQUEST_URI'];
+            $request = parse_url($requestUri);
+
+            $path = untrailingslashit($request['path']);
+
+            $login_slug = '/' . get_option('dhcl_login_slug');
+            $signup_slug = '/' . get_option('dhcl_signup_slug');
+
+            $target_paths = [
+                $login_slug,
+                $signup_slug
+            ];
+
+            if(in_array($path, $target_paths)) {
+                wp_safe_redirect(site_url('/'.get_option('dhcl_already_logged_in_redirect')));
+                die();
+            };
+        }
+
     }
 
     // hides login page

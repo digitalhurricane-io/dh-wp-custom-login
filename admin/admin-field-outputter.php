@@ -109,3 +109,7 @@ function dhcl_admin_single_checkbox_sanitizer($val) {
     return $val == '1' ? $val : '0';
 }
 
+function dhcl_strip_leading_slash_sanitizer($val) {
+    $val = untrailingslashit($val); // remove ending slash
+    return ltrim($val, '/'); // remove leading slash
+}

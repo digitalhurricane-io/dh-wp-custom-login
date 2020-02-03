@@ -142,6 +142,7 @@ class Dh_Custom_Login_Admin {
 				'section' => 'dhcl_slug_section',
 				'type' => 'text',
 				'supplimental' => 'Slug you will use for your login page.',
+				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
 			),
 			array(
 				'uid' => 'dhcl_signup_slug',
@@ -149,6 +150,7 @@ class Dh_Custom_Login_Admin {
 				'section' => 'dhcl_slug_section',
 				'type' => 'text',
 				'supplimental' => 'Slug you will use for your signup page.',
+				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
 			),
 			array(
 				'uid' => 'dhcl_password_reset_email_slug',
@@ -156,6 +158,7 @@ class Dh_Custom_Login_Admin {
 				'section' => 'dhcl_slug_section',
 				'type' => 'text',
 				'supplimental' => 'Page where the password reset email request form will be.',
+				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
 			),
 			array(
 				'uid' => 'dhcl_reset_password_slug',
@@ -163,6 +166,16 @@ class Dh_Custom_Login_Admin {
 				'section' => 'dhcl_slug_section',
 				'type' => 'text',
 				'supplimental' => 'Page where user will enter their new password after clicking on link in reset email.',
+				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
+			),
+			array(
+				'uid' => 'dhcl_already_logged_in_redirect',
+				'label' => 'Already Logged in Redirect',
+				'section' => 'dhcl_slug_section',
+				'type' => 'text',
+				'supplimental' => 'Page where user will be redirected if they are already logged in and they try to 
+					<br> visit the login or signup page. If left blank, will default to the home page.',
+				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
 			),
 
 
@@ -189,6 +202,7 @@ class Dh_Custom_Login_Admin {
 				'type' => 'single_checkbox',
 				'supplimental' => 'Whether to enable this plugins functionality.',
 				'default' => 0,
+				'sanitizer' => 'dhcl_admin_single_checkbox_sanitizer'
 			),
 			array(
 				'uid' => 'dhcl_create_pages',
@@ -196,14 +210,14 @@ class Dh_Custom_Login_Admin {
 				'section' => 'dhcl_slug_section',
 				'type' => 'ajax_button',
 				'supplimental' => 'This will create 4 pages using the slugs above and fill them with default content.
-					If the pages already exist, they will be OVERWRITTEN!!'
+					<br> If the pages already exist, they will be OVERWRITTEN!!'
 			)
 		);
 		foreach ($fields as $field) {
 
 			add_settings_field($field['uid'], $field['label'], 'dhcl_output_admin_field', 'dh_custom_login', $field['section'], $field);
-			if ($field['type'] == 'single_checkbox') {
-				register_setting('dh_custom_login', $field['uid'], 'dhcl_admin_single_checkbox_sanitizer');
+			if (isset($field['sanitizer'])) {
+				register_setting('dh_custom_login', $field['uid'], $field['sanitizer']);
 			} else {
 				register_setting('dh_custom_login', $field['uid']);
 			}
