@@ -1,0 +1,2 @@
+When user clicks on email, and goes to password reset page, we'll get key from query string with js,
+then ajax to password reset.

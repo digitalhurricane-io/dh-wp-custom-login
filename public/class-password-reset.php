@@ -12,6 +12,13 @@ class DH_Password_Reset
      */
     function send_password_reset_email()
     {
+
+        $nonce = isset($_POST['_wpnonce']) ? $_POST['_wpnonce'] : '';
+
+        if (!wp_verify_nonce($nonce, 'dh_custom_login')) {
+            wp_send_json_error("Nonce validation failed");
+        }
+
         $errors = new WP_Error();
 
         if (empty($_POST['user_login']) || !is_string($_POST['user_login'])) {
@@ -120,6 +127,12 @@ class DH_Password_Reset
     // this will be called on reset pass form submission
     function reset_password()
     {
+        $nonce = isset($_POST['_wpnonce']) ? $_POST['_wpnonce'] : '';
+
+        if (!wp_verify_nonce($nonce, 'dh_custom_login')) {
+            wp_send_json_error("Nonce validation failed");
+        }
+
         list($rp_path) = explode('?', wp_unslash($_SERVER['REQUEST_URI']));
         $rp_cookie       = 'wp-resetpass-' . COOKIEHASH;
 
@@ -136,7 +149,7 @@ class DH_Password_Reset
 
             $user = check_password_reset_key($rp_key, $rp_login);
 
-            if (isset($_POST['pass1']) && !hash_equals($rp_key, $_POST['rp_key'])) {
+            if (isset($_POST['password']) && !hash_equals($rp_key, $_POST['rp_key'])) {
                 $user = false;
             }
         } else {
@@ -147,13 +160,12 @@ class DH_Password_Reset
             setcookie($rp_cookie, ' ', time() - YEAR_IN_SECONDS, $rp_path, COOKIE_DOMAIN, is_ssl(), true);
 
             if ($user && $user->get_error_code() === 'expired_key') {
-                // expired key
-                // TODO: handle this
-                // wp_redirect(site_url('wp-login.php?action=lostpassword&error=expiredkey'));
+                // Expired key
+                wp_send_json_error('Password reset link expired');
+                
             } else {
-                // expired key
-                // TODO: handle this
-                // wp_redirect(site_url('wp-login.php?action=lostpassword&error=invalidkey'));
+                // Invalid key
+                wp_send_json_error('Invalid password reset key');
             }
 
             exit;
@@ -161,9 +173,9 @@ class DH_Password_Reset
 
         $errors = new WP_Error();
 
-        if (isset($_POST['pass1']) && $_POST['pass1'] != $_POST['pass2']) {
-            $errors->add('password_reset_mismatch', __('The passwords do not match.'));
-        }
+        // if (isset($_POST['pass1']) && $_POST['pass1'] != $_POST['pass2']) {
+        //     $errors->add('password_reset_mismatch', __('The passwords do not match.'));
+        // }
 
         /**
          * Fires before the password reset procedure is validated.
@@ -175,10 +187,11 @@ class DH_Password_Reset
          */
         do_action('validate_password_reset', $errors, $user);
 
-        if ((!$errors->has_errors()) && isset($_POST['pass1']) && !empty($_POST['pass1'])) {
-            reset_password($user, $_POST['pass1']);
+        if ((!$errors->has_errors()) && isset($_POST['password']) && !empty($_POST['password'])) {
+            reset_password($user, $_POST['password']);
             setcookie($rp_cookie, ' ', time() - YEAR_IN_SECONDS, $rp_path, COOKIE_DOMAIN, is_ssl(), true);
             // ** password successfully reset **
+            wp_send_json_success();
             exit;
         }
     }

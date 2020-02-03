@@ -130,6 +130,8 @@ class Dh_Custom_Login {
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-login-endpoint.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-dh-redirects.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-pass-email-shortcodes.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset.php';
 
 		$this->loader = new Dh_Custom_Login_Loader();
 
@@ -226,6 +228,16 @@ class Dh_Custom_Login {
 		add_shortcode('dh_registration_email_input', [$plugin_public->registration_shortcodes, 'email_input']);
 		add_shortcode('dh_registration_password_input', [$plugin_public->registration_shortcodes, 'password_input']);
 		add_shortcode('dh_registration_form_closing', [$plugin_public->registration_shortcodes, 'form_closing']);
+
+		// pass reset email shortcodes
+		add_shortcode('dh_pass_reset_email_form_opening', [$plugin_public->pass_email_shortcodes, 'form_opening']);
+		add_shortcode('dh_pass_reset_email_input', [$plugin_public->pass_email_shortcodes, 'email_input']);
+		add_shortcode('dh_pass_reset_email_form_closing', [$plugin_public->pass_email_shortcodes, 'form_closing']);
+
+		// pass reset shortcodes
+		add_shortcode('dh_rest_password_form_opening', [$plugin_public->reset_password_shortcodes, 'form_opening']);
+		add_shortcode('dh_rest_password_password_input', [$plugin_public->reset_password_shortcodes, 'password_input']);
+		add_shortcode('dh_rest_password_form_closing', [$plugin_public->reset_password_shortcodes, 'form_closing']);
 
 	}
 

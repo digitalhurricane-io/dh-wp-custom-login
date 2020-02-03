@@ -59,6 +59,12 @@ class Dh_Custom_Login_Public {
 	// my class with password reset code
 	public $password_reset;
 
+	// my class, pass email form shortcodes
+	public $pass_email_shortcodes;
+
+	// my class, reset password shortcodes
+	public $reset_password_shortcodes;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -76,6 +82,8 @@ class Dh_Custom_Login_Public {
 		$this->dh_custom_login_endpoint = new DH_Custom_Login_Endpoint();
 		$this->dh_redirects = new DH_Redirects();
 		$this->password_reset = new DH_Password_Reset();
+		$this->pass_email_shortcodes = new DH_Pass_Email_Shortcodes();
+		$this->reset_password_shortcodes = new DH_Reset_Password_Shortcodes();
 	}
 
 	/**
