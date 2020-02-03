@@ -17,14 +17,24 @@
 				data: form.serialize(), // serializes the form's elements.
 				success: function (res) {
 					console.log('res: ', res); // show response from the php script.
+
+					const message = res.data;
+					if (message) {
+						$('#dh_form_messages').text(message);
+					}
 					
 					if (!res.success) {
 						console.log('no success');
-						$('#dh_form_errors').text(res.data);
 						return;
 					}
 
-					window.location.href = $('input[name="redirect_to"]').val();
+					const redirectUrl = $('input[name="redirect_to"]').val();
+					if (!redirectUrl) {
+						// we're not on a page that needs / wants a redirect
+						return;
+					}
+
+					window.location.href = redirectUrl;
 				},
 				error: function (a,b,c) {
 					console.log(a,b,c);

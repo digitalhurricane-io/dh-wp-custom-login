@@ -24,6 +24,8 @@ class DH_Pass_Email_Shortcodes {
     }
 
     public function email_input($atts) {
+        $atts = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
+
         $startHtml = '<input name="user_login" type="text"';
         $endHtml = '/>';
         return $this->set_attributes($startHtml, $endHtml, $atts);

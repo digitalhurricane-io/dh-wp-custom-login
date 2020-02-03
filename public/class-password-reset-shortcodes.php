@@ -23,6 +23,8 @@ class DH_Reset_Password_Shortcodes {
     }
 
     public function password_input($atts) {
+        $atts = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
+        
         $startHtml = '<input name="password" type="password"';
         $endHtml = '/>';
         return $this->set_attributes($startHtml, $endHtml, $atts);

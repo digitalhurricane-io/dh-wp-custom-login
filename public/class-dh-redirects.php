@@ -19,7 +19,6 @@ class DH_Redirects {
     // hides login page
     public function hide_wp_login()
     {
-
         // if we are logging out, return
         $request = parse_url($_SERVER['REQUEST_URI']);
         if (array_key_exists('query', $request) && strpos($request["query"], 'action=logout') !== false) {
@@ -34,14 +33,14 @@ class DH_Redirects {
             // user is trying to go to disallowed page
             // we should 404 them
             wp_safe_redirect(home_url('/404'));
-            die();
         }
     }
 
     // returns true if we're heading to one of the target pages
     public function target_page_match()
     {
-        $request = parse_url($_SERVER['REQUEST_URI']);
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $request = parse_url($requestUri);
 
         $match = false;
 
@@ -57,7 +56,9 @@ class DH_Redirects {
 
         $match = in_array($path, $target_paths);
 
-        if ($path == '/wp-admin' || $path == '/wp-admin.php' && !current_user_can('administrator')) {
+        $isWpAdminUri = strpos($requestUri, 'wp-admin') !== false;
+        $isAjaxRequest = strpos($requestUri, 'wp-admin/admin-ajax.php') !== false;
+        if ($isWpAdminUri && !$isAjaxRequest && !is_super_admin()) {
             $match = true;
         }
 

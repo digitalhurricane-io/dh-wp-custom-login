@@ -220,7 +220,7 @@ class Dh_Custom_Login {
 		add_shortcode('dh_login_form_closing', [$plugin_public->login_shortcodes, 'login_form_closing']);
 		add_shortcode('dh_login_username_input', [$plugin_public->login_shortcodes, 'login_username_input']);
 		add_shortcode('dh_login_password_input', [$plugin_public->login_shortcodes, 'login_password_input']);
-		add_shortcode('dh_form_errors', [$plugin_public->login_shortcodes, 'form_errors']);
+		add_shortcode('dh_form_messages', [$plugin_public->login_shortcodes, 'form_messages']);
 
 		// register shortcodes
 		add_shortcode('dh_registration_form_opening', [$plugin_public->registration_shortcodes, 'form_opening']);

@@ -100,7 +100,7 @@ class DH_Login_Shortcodes {
         return $startHtml . ' ' . $endHtml;
     }
 
-    public function form_errors() {
-        return '<div id="dh_form_errors"></div>';
+    public function form_messages() {
+        return '<div id="dh_form_messages"></div>';
     }
 }
