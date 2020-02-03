@@ -72,15 +72,15 @@ class DH_Password_Reset
             $site_name = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
         }
 
-        $message = __('Someone has requested a password reset for the following account:') . "\r\n\r\n";
+        $message = __('Someone has requested a password reset for the following account:<br><br>') . "\r\n\r\n";
         /* translators: %s: Site name. */
-        $message .= sprintf(__('Site Name: %s'), $site_name) . "\r\n\r\n";
+        $message .= sprintf(__('Site Name: %s<br>'), $site_name) . "\r\n\r\n";
         /* translators: %s: User login. */
-        $message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
-        $message .= __('If this was a mistake, just ignore this email and nothing will happen.') . "\r\n\r\n";
-        $message .= __('To reset your password, visit the following address:') . "\r\n\r\n";
+        $message .= sprintf(__('Username: %s<br><br>'), $user_login) . "\r\n\r\n";
+        $message .= __('If this was a mistake, just ignore this email.<br><br>') . "\r\n\r\n";
+        $message .= __('To reset your password, click the link below:<br><br>') . "\r\n\r\n";
         
-        $message .= '<' . network_site_url( get_option('dhcl_reset_password_slug') . "/?key=$key&login=" . rawurlencode($user_login), 'login') . ">\r\n";
+        $message .= '<a href="' . network_site_url( get_option('dhcl_reset_password_slug') . "/?key=$key&login=" . rawurlencode($user_login), 'login') . "\">Reset Password</a>\r\n";
 
         /* translators: Password reset notification email subject. %s: Site title. */
         $title = sprintf(__('[%s] Password Reset'), $site_name);
@@ -111,8 +111,9 @@ class DH_Password_Reset
          * @param WP_User $user_data  WP_User object.
          */
         $message = apply_filters('retrieve_password_message', $message, $key, $user_login, $user_data);
+        $headers = array('Content-Type: text/html; charset=UTF-8');
 
-        if ($message && !wp_mail($user_email, wp_specialchars_decode($title), $message)) {
+        if ($message && !wp_mail($user_email, wp_specialchars_decode($title), $message, $headers)) {
             $errors->add(
                 'retrieve_password_email_failure',
                 __('The email could not be sent. Site may not be correctly configured to send emails. Get support for resetting your password.')
