@@ -162,8 +162,12 @@ class Dh_Custom_Login {
 
 		$plugin_admin = new Dh_Custom_Login_Admin( $this->get_dh_custom_login(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		// only enqueue admin styles and scripts if we're on our settings page
+		if (isset($_GET['page']) && $_GET['page'] === 'dh_custom_login') { 
+			$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+			$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+		}
+		
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_admin_page');
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'setup_admin_page_sections');
 
@@ -183,9 +187,13 @@ class Dh_Custom_Login {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+		// hide admin bar for non admin users
+		$this->loader->add_action('after_setup_theme', $plugin_public, 'remove_admin_bar');
+
 		// custom registration / login / logout
 		$this->loader->add_action('wp_ajax_nopriv_dhcl_create_account', $plugin_public->dh_custom_registration_endpoint, 'create_account');
 		$this->loader->add_action('wp_ajax_nopriv_dhcl_login', $plugin_public->dh_custom_login_endpoint, 'login');
+		$this->loader->add_action('wp_ajax_dhcl_login', $plugin_public->dh_custom_login_endpoint, 'login');
 
 		// disable auto insertion of <p> tags by wordpress
 		$this->loader->add_filter('the_content', $plugin_public, 'conditionally_disable_wpautop', 9);
@@ -201,6 +209,7 @@ class Dh_Custom_Login {
 		add_shortcode('dh_login_form_closing', [$plugin_public->login_shortcodes, 'login_form_closing']);
 		add_shortcode('dh_login_username_input', [$plugin_public->login_shortcodes, 'login_username_input']);
 		add_shortcode('dh_login_password_input', [$plugin_public->login_shortcodes, 'login_password_input']);
+		add_shortcode('dh_form_errors', [$plugin_public->login_shortcodes, 'form_errors']);
 
 		// register shortcodes
 		add_shortcode('dh_registration_form_opening', [$plugin_public->registration_shortcodes, 'form_opening']);
@@ -208,6 +217,7 @@ class Dh_Custom_Login {
 		add_shortcode('dh_registration_email_input', [$plugin_public->registration_shortcodes, 'email_input']);
 		add_shortcode('dh_registration_password_input', [$plugin_public->registration_shortcodes, 'password_input']);
 		add_shortcode('dh_registration_form_closing', [$plugin_public->registration_shortcodes, 'form_closing']);
+
 	}
 
 	/**

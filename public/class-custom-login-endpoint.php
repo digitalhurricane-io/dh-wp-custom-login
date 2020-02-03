@@ -15,11 +15,11 @@ class DH_Custom_Login_Endpoint {
         $nonce = isset($_POST['_wpnonce']) ? $_POST['_wpnonce'] : '';
 
         if (!wp_verify_nonce($nonce, 'dh_custom_login')) {
-            wp_send_json_error(["error" => "Nonce validation failed"]);
+            wp_send_json_error("Nonce validation failed");
         }
 
         if (!isset($_POST['usernameOrEmail'], $_POST['pass'])) {
-            wp_send_json_error(["error" => "Username or email not provided"]);
+            wp_send_json_error("Username or email not provided");
         }
 
         $this->redirect_to = $_POST['redirect_to'];
@@ -65,10 +65,11 @@ class DH_Custom_Login_Endpoint {
         ], false);
 
         if (is_wp_error($result)) {
-            wp_send_json_error();
+            wp_send_json_error($result->get_error_message());
         }
 
-        wp_safe_redirect($this->redirect_to);
+        wp_send_json_success();
+        //wp_safe_redirect($this->redirect_to);
         die();
     }
 

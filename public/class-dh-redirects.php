@@ -36,6 +36,7 @@ class DH_Redirects {
             || strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-activate') !== false
             || strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-login') !== false
             || strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-register') !== false  // check if wp-activate is in request uri
+            || (strpos(rawurldecode($_SERVER['REQUEST_URI']), 'wp-admin') !== false && !current_user_can('edit_theme_options'))
         ) {
 
             // user is trying to go to disallowed page

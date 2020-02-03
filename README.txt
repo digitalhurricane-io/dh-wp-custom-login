@@ -22,6 +22,10 @@ by setting the shortcode attribute relative_redirect_url="/my-url" on the form_c
 
 Also, when the plugin is activated wp-login.php will redirect to a 404.
 
+wp-admin will also redirect to a 404 page if user is not administrator.
+
+Wp admin top bar will be hidden for non administrators.
+
 Also, auto insertion of <p> tags will be disabled if the page slug is 'login' or 'signup'.
 
 Not implemented yet, but form page for password reset email url will be /password-reset-email

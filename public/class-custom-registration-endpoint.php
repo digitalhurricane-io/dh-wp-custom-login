@@ -13,11 +13,11 @@ class DH_Custom_Registration {
 		}
 
 		if (!get_option('users_can_register')) { // a default wp setting in wp admin that determines whether user can register
-			wp_send_json_error(["error" => "Registration is closed"]);
+			wp_send_json_error("Registration is closed");
 		};
 
 		if ( !isset($_POST['username'], $_POST['email'], $_POST['password'])) {
-			wp_send_json_error(["error" => "Form filled incorrectly"]);
+			wp_send_json_error("Form filled incorrectly");
 		}
 
 		$username = sanitize_text_field($_POST['username']);
@@ -25,11 +25,11 @@ class DH_Custom_Registration {
 		$pass = sanitize_text_field($_POST['password']);
 
 		if (username_exists($username) || email_exists($email)) {
-			wp_send_json_error(['error' => 'Username or email exists']);
+			wp_send_json_error('Username or email exists');
 		}
 
 		if (!is_email($email)) {
-			wp_send_json_error(['error' => 'Invalid email']);
+			wp_send_json_error('Invalid email');
 		}
 
 		$user_id = wp_insert_user([
@@ -40,7 +40,7 @@ class DH_Custom_Registration {
 		]);
 
 		if (is_wp_error($user_id)) {
-			wp_send_json_error();
+			wp_send_json_error($user_id->get_error_message());
 		}
 
 		// send user an email with their new credentials
@@ -52,7 +52,8 @@ class DH_Custom_Registration {
 		wp_set_auth_cookie($user_id);
 
 		do_action('wp_login', $user->user_login, $user);
-        
-        wp_safe_redirect(home_url());
+		
+		wp_send_json_success();
+        //wp_safe_redirect(home_url());
 	}
 }

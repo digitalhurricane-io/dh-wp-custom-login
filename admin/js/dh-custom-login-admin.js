@@ -6,7 +6,7 @@
 		document.getElementById('dhcl_create_pages').addEventListener('click', async (e) => {
 			e.preventDefault();
 
-			await createPages();
+			await createPages($);
 
 			// since wordpress names submit button 'submit',
 			// the submit property doesn't refer to the submit method.
@@ -20,7 +20,7 @@
 })( jQuery );
 
 
-async function createPages() {
+async function createPages($) {
 	const loginSlug = $('#dhcl_login_slug').val();
 	const signupSlug = $('#dhcl_signup_slug').val();
 	const resetRequestSlug = $('dhcl_password_reset_email_slug').val();
