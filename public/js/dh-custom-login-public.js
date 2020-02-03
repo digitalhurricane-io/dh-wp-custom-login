@@ -7,14 +7,29 @@
 			e.preventDefault();
 
 			let form = $(this);
-			let url = form.attr('action');
-			console.log('action url: ', url);
+			let actionUrl = form.attr('action');
+			form = form.serializeArray();
+
+			console.log('action url: ', actionUrl);
 			console.log('making request');
+
+			const urlParams = new URLSearchParams(window.location.search);
+			const rpKey = urlParams.get('key');
+			const rpLogin = urlParams.get('login');
+			if (rpKey && rpLogin) {
+				form = form.concat([
+					{name: 'rp_key', value: rpKey},
+					{name: 'login', value: rpLogin}
+				]);
+			}
+
+			console.log(form);
+
 
 			$.ajax({
 				type: "POST",
-				url: url,
-				data: form.serialize(), // serializes the form's elements.
+				url: actionUrl,
+				data: form, // serializes the form's elements.
 				success: function (res) {
 					console.log('res: ', res); // show response from the php script.
 
@@ -38,6 +53,7 @@
 				},
 				error: function (a,b,c) {
 					console.log(a,b,c);
+					$('#dh_form_messages').text(c);
 				}
 			});
 

@@ -129,7 +129,7 @@ class Dh_Custom_Login {
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-registration-endpoint.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-custom-login-endpoint.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-dh-redirects.php';
-		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset-endpoints.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-pass-email-shortcodes.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset-shortcodes.php';
 

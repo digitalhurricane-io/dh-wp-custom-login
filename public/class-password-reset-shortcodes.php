@@ -4,6 +4,7 @@
 class DH_Reset_Password_Shortcodes {
 
     public function form_opening($atts) {
+
         $original = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
 
         $mergedAtts = array_merge(array(

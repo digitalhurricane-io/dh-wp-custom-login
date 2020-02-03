@@ -65,7 +65,7 @@ class DH_Custom_Login_Endpoint {
         ], false);
 
         if (is_wp_error($result)) {
-            wp_send_json_error($result->get_error_message());
+            wp_send_json_error(wp_strip_all_tags($result->get_error_message()));
         }
 
         wp_send_json_success();
