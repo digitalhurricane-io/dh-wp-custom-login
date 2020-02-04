@@ -174,6 +174,7 @@ class Dh_Custom_Login {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_admin_page');
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'setup_admin_page_sections');
 
+		$this->loader->add_action( 'wp_ajax_dhcl_create_default_pages', $plugin_admin, 'create_default_pages');
 	}
 
 	/**
@@ -221,6 +222,10 @@ class Dh_Custom_Login {
 		add_shortcode('dh_login_username_input', [$plugin_public->login_shortcodes, 'login_username_input']);
 		add_shortcode('dh_login_password_input', [$plugin_public->login_shortcodes, 'login_password_input']);
 		add_shortcode('dh_form_messages', [$plugin_public->login_shortcodes, 'form_messages']);
+		add_shortcode('dh_forgot_password_link_open', [$plugin_public->login_shortcodes, 'forgot_password_link_open']);
+		add_shortcode('dh_forgot_password_link_close', [$plugin_public->login_shortcodes, 'forgot_password_link_close']);
+		add_shortcode('dh_signup_link_open', [$plugin_public->login_shortcodes, 'signup_link_open']);
+		add_shortcode('dh_signup_link_close', [$plugin_public->login_shortcodes, 'signup_link_close']);
 
 		// register shortcodes
 		add_shortcode('dh_registration_form_opening', [$plugin_public->registration_shortcodes, 'form_opening']);

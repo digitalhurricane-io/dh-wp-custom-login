@@ -235,6 +235,50 @@ class Dh_Custom_Login_Admin {
 		$this->check_if_authorized();
 		
 		// https://stackoverflow.com/questions/32314278/how-to-create-a-new-wordpress-page-programmatically
+
+		// The form hasn't been saved yet, so we're using the unsaved values in the POST variable, instead of using get_option
+		// method_name => slug
+		$info = [
+			'login_page_content' => $_POST('login_slug'),
+			'signup_page_content' => $_POST('signup_slug'),
+			'pass_reset_request_content' => $_POST('reset_request_slug'),
+			'pass_reset_content' => $_POST('reset_password_slug')
+		];
+
+		foreach($info as $method_name => $slug) {
+			$page = get_page_by_path($slug); // returns wp_post object https://developer.wordpress.org/reference/classes/wp_post/
+
+			$defaultContent = call_user_func_array([$this, $method_name], []);
+			
+			if (isset($page)) { // update page
+				$page->post_content = $defaultContent['content'];
+				wp_update_post($page);
+
+			} else { // create page
+				$page_id = wp_insert_post(
+					array(
+						'comment_status' => 'close',
+						'ping_status'    => 'close',
+						'post_author'    => 1,
+						'post_title'     => ucwords($defaultContent['title']),
+						'post_name'      => strtolower(str_replace(' ', '-', trim($defaultContent['title']))),
+						'post_status'    => 'publish',
+						'post_content'   => $defaultContent['content'],
+						'post_type'      => 'page',
+					)
+				);
+			}
+			
+		}
+
+		
+		
+
+		return wp_send_json_success();
+	}
+
+	public function t() {
+		echo 'hi';
 	}
 
 	/**
@@ -243,11 +287,11 @@ class Dh_Custom_Login_Admin {
 	private function check_if_authorized()
 	{
 		// check if user has admin permissions
-		if (!current_user_can('edit_theme_options')) {
+		if (!is_super_admin()) {
 			wp_die(__('Unauthorized', 'dh-custom-login'));
 		}
 
 		// check nonce and kills script if is false
-		check_admin_referer('dhcl_nonce');
+		check_admin_referer();
 	}
 }

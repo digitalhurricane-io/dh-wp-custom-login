@@ -90,6 +90,42 @@ class DH_Login_Shortcodes {
         return '<input type="hidden" name="testcookie" value="1" />';
     }
 
+    public function forgot_password_link_open($atts) {
+        $original = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
+
+        $mergedAtts = array_merge(array(
+            'class' => 'dh-forgot-pass-link',
+            'href' => site_url(get_option('dhcl_password_reset_email_slug'))
+        ), $original);
+
+        $startHtml = '<a';
+        $endHtml = '>';
+
+        return $this->set_attributes($startHtml, $endHtml, $mergedAtts);
+    }
+
+    public function forgot_password_link_close() {
+        return '</a>';
+    }
+
+    public function signup_link_open($atts) {
+        $original = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
+
+        $mergedAtts = array_merge(array(
+            'class' => 'dh-sign-up-link',
+            'href' => site_url(get_option('dhcl_signup_slug'))
+        ), $original);
+
+        $startHtml = '<a';
+        $endHtml = '>';
+
+        return $this->set_attributes($startHtml, $endHtml, $mergedAtts);
+    }
+
+    public function signup_link_close() {
+        return '</a>';
+    }
+
     /**
      * Takes any attributes passed in the shortcode, and sets them on the html element
      */
