@@ -105,7 +105,15 @@ class Dh_Custom_Login_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->dh_custom_login, plugin_dir_url( __FILE__ ) . 'css/dh-custom-login-public.css', array(), $this->version, 'all' );
+		if (get_option('dhcl_enqueue_css')) {
+			wp_enqueue_style($this->dh_custom_login, plugin_dir_url(__FILE__) . 'css/dh-custom-login-public.css', array(), '1.0.0', 'all');
+		}
+		
+
+		if (get_option('dhcl_enqueue_bootstrap')) {
+			wp_register_style('bootstrap', plugin_dir_url(__FILE__). '/css/bootstrap.min.css', array(), null, 'all');
+			wp_enqueue_style('bootstrap');
+		}
 
 	}
 
@@ -129,6 +137,11 @@ class Dh_Custom_Login_Public {
 		 */
 
 		wp_enqueue_script( $this->dh_custom_login, plugin_dir_url( __FILE__ ) . 'js/dh-custom-login-public.js', array( 'jquery' ), $this->version, false );
+
+		if (get_option('dhcl_enqueue_bootstrap')) {
+			wp_register_script('bootstrap', plugin_dir_url(__FILE__) . '/js/bootstrap.bundle.min.js', array('jquery'), '4.4.1', true);
+			wp_enqueue_script('bootstrap');
+		}
 
 	}
 

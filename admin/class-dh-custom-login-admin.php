@@ -138,7 +138,7 @@ class Dh_Custom_Login_Admin {
 		$fields = array(
 			array(
 				'uid' => 'dhcl_login_slug',
-				'label' => 'Login Page',
+				'label' => 'Login',
 				'section' => 'dhcl_slug_section',
 				'type' => 'text',
 				'supplimental' => 'Slug you will use for your login page.',
@@ -146,7 +146,7 @@ class Dh_Custom_Login_Admin {
 			),
 			array(
 				'uid' => 'dhcl_signup_slug',
-				'label' => 'Sign up page',
+				'label' => 'Sign up',
 				'section' => 'dhcl_slug_section',
 				'type' => 'text',
 				'supplimental' => 'Slug you will use for your signup page.',
@@ -157,7 +157,7 @@ class Dh_Custom_Login_Admin {
 				'label' => 'Password Reset Request',
 				'section' => 'dhcl_slug_section',
 				'type' => 'text',
-				'supplimental' => 'Page where the password reset email request form will be.',
+				'supplimental' => 'Slug for page where the password reset email request form will be.',
 				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
 			),
 			array(
@@ -165,7 +165,7 @@ class Dh_Custom_Login_Admin {
 				'label' => 'Reset Password',
 				'section' => 'dhcl_slug_section',
 				'type' => 'text',
-				'supplimental' => 'Page where user will enter their new password after clicking on link in reset email.',
+				'supplimental' => 'Slug for page where user will enter their new password after clicking on link in reset email.',
 				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
 			),
 			array(
@@ -210,7 +210,9 @@ class Dh_Custom_Login_Admin {
 				'section' => 'dhcl_slug_section',
 				'type' => 'ajax_button',
 				'supplimental' => 'This will create 4 pages using the slugs above and fill them with default content.
-					<br> If the pages already exist, they will be OVERWRITTEN!!'
+					<br> If the pages already exist, they will be OVERWRITTEN!!
+					<br> You will still need to enable custom login below in order for 
+					<br> the pages to be functional.'
 			)
 		);
 		foreach ($fields as $field) {

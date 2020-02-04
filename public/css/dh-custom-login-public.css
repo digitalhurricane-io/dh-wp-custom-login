@@ -2,3 +2,50 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ .login-form-element {
+    min-height: 47px;
+}
+
+.login-form-wrapper {
+    padding: 0 30px 10px 30px;
+    max-width: 460px;
+    background: #222B45;
+}
+
+.login-title {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.login-button {
+    margin-top: 18px;
+    margin-bottom: 20px;
+    height: 60px;
+    font-size: 24px;
+}
+
+.dh-login-links {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 15px;
+}
+
+.signup-button {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    height: 60px;
+    font-size: 24px;
+}
+
+.dh-send-reset-btn {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    height: 55px;
+    font-size: 22px;
+}
+
+#dh_form_messages {
+    margin-top: 10px;
+}

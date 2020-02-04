@@ -77,8 +77,15 @@ class Dh_Custom_Login {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
-		$this->define_public_hooks();
 
+		// remember that if you didn't have this option,
+		// the users login page would be disabled as soon as 
+		// they activate the plugin, even though new login page
+		// has not yet been created
+		if (get_option('dhcl_enabled')) {
+			$this->define_public_hooks();
+		}
+		
 	}
 
 	/**
@@ -192,7 +199,7 @@ class Dh_Custom_Login {
 		// only enqueue scripts and styles if we're on a page where they're needed
 		$request = parse_url($_SERVER['REQUEST_URI']);
 		if (array_key_exists('path', $request) && $plugin_public->page_match($request)) {
-			$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+			$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles', 100);
 			$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
 		}
 
