@@ -1,7 +1,7 @@
 <?php
 
-function dhcl_settions_page() {
-    wp_nonce_field('dhcl_nonce');
+function dhcl_settings_page() {
+    //wp_nonce_field('dhcl_admin_page'); // admin page already has a nonce
     ?>
     
     <div class="wrap">

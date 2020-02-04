@@ -12,14 +12,14 @@ ______
 <div class="form-group">
 <label>Password</label>
 [dh_login_password_input class="form-control login-form-element" placeholder="Password"]</div>
-<a href="" class="dh-forgot-pass-link">Forgot Password?</a>
+[dh_forgot_password_link_open]Forgot Password?[dh_forgot_password_link_close]
 
 [dh_form_messages]
 
 <button type="submit" class="login-form-element btn btn-success btn-block login-button">Login</button>
 [dh_login_form_closing relative_redirect_url="/"]
 <div class="row justify-content-center dh-login-links">
-	<a href="" class="dh-sign-up-link">Sign Up</a></div>
+	[dh_signup_link_open]Sign Up[dh_signup_link_close]</div>
 </div>
 </div>
 ______

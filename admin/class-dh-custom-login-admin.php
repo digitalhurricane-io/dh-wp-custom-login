@@ -113,7 +113,7 @@ class Dh_Custom_Login_Admin {
 		$menu_title = 'DH Custom Login';
 		$capability = 'manage_options';
 		$slug = 'dh_custom_login';
-		$callback = 'dhcl_settions_page';
+		$callback = 'dhcl_settings_page';
 		$icon = 'dashicons-admin-plugins';
 		$position = 100;
 
@@ -239,40 +239,53 @@ class Dh_Custom_Login_Admin {
 		// The form hasn't been saved yet, so we're using the unsaved values in the POST variable, instead of using get_option
 		// method_name => slug
 		$info = [
-			'login_page_content' => $_POST('login_slug'),
-			'signup_page_content' => $_POST('signup_slug'),
-			'pass_reset_request_content' => $_POST('reset_request_slug'),
-			'pass_reset_content' => $_POST('reset_password_slug')
+			'login_page_content' => $_POST['login_slug'],
+			'signup_page_content' => $_POST['signup_slug'],
+			'pass_reset_request_content' => $_POST['reset_request_slug'],
+			'pass_reset_content' => $_POST['reset_password_slug']
 		];
 
 		foreach($info as $method_name => $slug) {
 			$page = get_page_by_path($slug); // returns wp_post object https://developer.wordpress.org/reference/classes/wp_post/
 
-			$defaultContent = call_user_func_array([$this, $method_name], []);
+			$dc = new DH_Default_Page_Content();
+			$defaultContent = call_user_func_array([$dc, $method_name], []);
 			
 			if (isset($page)) { // update page
-				$page->post_content = $defaultContent['content'];
+				$page->post_content = $defaultContent;
 				wp_update_post($page);
 
 			} else { // create page
-				$page_id = wp_insert_post(
-					array(
-						'comment_status' => 'close',
-						'ping_status'    => 'close',
-						'post_author'    => 1,
-						'post_title'     => ucwords($defaultContent['title']),
-						'post_name'      => strtolower(str_replace(' ', '-', trim($defaultContent['title']))),
-						'post_status'    => 'publish',
-						'post_content'   => $defaultContent['content'],
-						'post_type'      => 'page',
-					)
+
+				$args = [
+					'comment_status' => 'close',
+					'ping_status'    => 'close',
+					'post_author'    => 1,
+					'post_title'     => $slug,
+					'post_name'      => $slug, // will be the actual slug of the page
+					'post_status'    => 'publish',
+					'post_content'   => $defaultContent,
+					'post_type'      => 'page',
+				];
+
+				// page-no-title.php
+				// this template exists in the theme I'm also making right now.
+				// so I'm going to use it if it exists
+				$template = get_template_directory() . '/page-no-title.php';
+				if (file_exists($template)) {
+					$args['page_template'] = 'page-no-title.php';
+				}
+
+				$result = wp_insert_post( // wp error or page id
+					$args
 				);
+
+				if (is_wp_error($result)) {
+					wp_send_json_error($result->get_error_message());
+				}
 			}
 			
 		}
-
-		
-		
 
 		return wp_send_json_success();
 	}
@@ -292,6 +305,7 @@ class Dh_Custom_Login_Admin {
 		}
 
 		// check nonce and kills script if is false
+		// need to specify name here
 		check_admin_referer();
 	}
 }
