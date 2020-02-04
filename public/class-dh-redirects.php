@@ -30,10 +30,14 @@ class DH_Redirects {
 
             $login_slug = '/' . get_option('dhcl_login_slug');
             $signup_slug = '/' . get_option('dhcl_signup_slug');
+            $pass_reset_request_slug = '/' . get_option('dhcl_password_reset_email_slug');
+            $pass_reset_slug = '/' . get_option('dhcl_reset_password_slug');
 
             $target_paths = [
                 $login_slug,
-                $signup_slug
+                $signup_slug,
+                $pass_reset_request_slug,
+                $pass_reset_slug
             ];
 
             if(in_array($path, $target_paths)) {
