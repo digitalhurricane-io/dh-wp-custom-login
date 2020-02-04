@@ -174,7 +174,7 @@ class Dh_Custom_Login_Admin {
 				'section' => 'dhcl_slug_section',
 				'type' => 'text',
 				'supplimental' => 'Page where user will be redirected if they are already logged in and they try to 
-					<br> visit one of the pages listed above.',
+					<br> visit one of the pages listed above. Admins will not be redirected.',
 				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
 			),
 

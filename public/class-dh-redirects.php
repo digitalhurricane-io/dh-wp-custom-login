@@ -38,7 +38,7 @@ class DH_Redirects {
             $pass_reset_slug
         ];
 
-        if(in_array($path, $target_paths) && is_user_logged_in()) {
+        if(in_array($path, $target_paths) && is_user_logged_in() && !is_super_admin()) {
             wp_safe_redirect(site_url('/'.get_option('dhcl_already_logged_in_redirect')));
             die();
         };  
