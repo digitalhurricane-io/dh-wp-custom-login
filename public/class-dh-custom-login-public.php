@@ -106,7 +106,7 @@ class Dh_Custom_Login_Public {
 		 */
 
 		if (get_option('dhcl_enqueue_css')) {
-			wp_enqueue_style($this->dh_custom_login, plugin_dir_url(__FILE__) . 'css/dh-custom-login-public.css', array(), '1.0.0', 'all');
+			wp_enqueue_style($this->dh_custom_login, plugin_dir_url(__FILE__) . 'css/dh-custom-login-public.css', array("bootstrap"), '1.0.0', 'all');
 		}
 		
 
@@ -175,7 +175,7 @@ class Dh_Custom_Login_Public {
 
 	public function remove_admin_bar()
 	{
-		if (!current_user_can('administrator') && !is_admin()) {
+		if (!current_user_can('administrator')) {
 			show_admin_bar(false);
 		}
 	}

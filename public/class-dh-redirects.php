@@ -21,30 +21,27 @@ class DH_Redirects {
     // they will be redirected to a page specified in admin settings
     public function already_logged_in_redirect() {
 
-        if (is_user_logged_in()) {
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $request = parse_url($requestUri);
 
-            $requestUri = $_SERVER['REQUEST_URI'];
-            $request = parse_url($requestUri);
+        $path = untrailingslashit($request['path']);
 
-            $path = untrailingslashit($request['path']);
+        $login_slug = '/' . get_option('dhcl_login_slug');
+        $signup_slug = '/' . get_option('dhcl_signup_slug');
+        $pass_reset_request_slug = '/' . get_option('dhcl_password_reset_email_slug');
+        $pass_reset_slug = '/' . get_option('dhcl_reset_password_slug');
 
-            $login_slug = '/' . get_option('dhcl_login_slug');
-            $signup_slug = '/' . get_option('dhcl_signup_slug');
-            $pass_reset_request_slug = '/' . get_option('dhcl_password_reset_email_slug');
-            $pass_reset_slug = '/' . get_option('dhcl_reset_password_slug');
+        $target_paths = [
+            $login_slug,
+            $signup_slug,
+            $pass_reset_request_slug,
+            $pass_reset_slug
+        ];
 
-            $target_paths = [
-                $login_slug,
-                $signup_slug,
-                $pass_reset_request_slug,
-                $pass_reset_slug
-            ];
-
-            if(in_array($path, $target_paths)) {
-                wp_safe_redirect(site_url('/'.get_option('dhcl_already_logged_in_redirect')));
-                die();
-            };
-        }
+        if(in_array($path, $target_paths) && is_user_logged_in()) {
+            wp_safe_redirect(site_url('/'.get_option('dhcl_already_logged_in_redirect')));
+            die();
+        };  
 
     }
 
