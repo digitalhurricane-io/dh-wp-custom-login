@@ -234,6 +234,8 @@ class Dh_Custom_Login {
 		add_shortcode('dh_forgot_password_link_close', [$plugin_public->login_shortcodes, 'forgot_password_link_close']);
 		add_shortcode('dh_signup_link_open', [$plugin_public->login_shortcodes, 'signup_link_open']);
 		add_shortcode('dh_signup_link_close', [$plugin_public->login_shortcodes, 'signup_link_close']);
+		add_shortcode('dh_login_link_open', [$plugin_public->login_shortcodes, 'login_link_open']);
+		add_shortcode('dh_login_link_close', [$plugin_public->login_shortcodes, 'login_link_close']);
 
 		// register shortcodes
 		add_shortcode('dh_registration_form_opening', [$plugin_public->registration_shortcodes, 'form_opening']);

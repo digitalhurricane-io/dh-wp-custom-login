@@ -44,7 +44,9 @@ class DH_Default_Page_Content {
 
 <button type="submit" class="login-form-element btn btn-success btn-block signup-button">Sign Up</button>
 [dh_registration_form_closing relative_redirect_url="/"]
-
+<div class="row justify-content-center dh-login-links">
+    [dh_login_link_open]Or Login[dh_login_link_close]
+</div>
 </div>
 </div>';
     }

@@ -126,6 +126,26 @@ class DH_Login_Shortcodes {
         return '</a>';
     }
 
+    public function login_link_open($atts)
+    {
+        $original = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
+
+        $mergedAtts = array_merge(array(
+            'class' => 'dh-login-link',
+            'href' => site_url(get_option('dhcl_login_slug'))
+        ), $original);
+
+        $startHtml = '<a';
+        $endHtml = '>';
+
+        return $this->set_attributes($startHtml, $endHtml, $mergedAtts);
+    }
+
+    public function login_link_close()
+    {
+        return '</a>';
+    }
+
     /**
      * Takes any attributes passed in the shortcode, and sets them on the html element
      */

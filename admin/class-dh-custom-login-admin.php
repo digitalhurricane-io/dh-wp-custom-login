@@ -239,6 +239,8 @@ class Dh_Custom_Login_Admin {
 		// https://stackoverflow.com/questions/32314278/how-to-create-a-new-wordpress-page-programmatically
 
 		// The form hasn't been saved yet, so we're using the unsaved values in the POST variable, instead of using get_option
+		// form will be submitted after this method returns a success reponse
+
 		// method_name => slug
 		$info = [
 			'login_page_content' => $_POST['login_slug'],
