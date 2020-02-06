@@ -55,7 +55,9 @@
 
 					// look for redirect location provided in hidden input
 					const redirectUrl = $('input[name="redirect_to"]').val();
-					if (!redirectUrl) {
+					console.log('redirect_to: ', redirectUrl);
+					if (redirectUrl) {
+						console.log('redirecting');
 						window.location.href = redirectUrl;
 						return;
 					}
