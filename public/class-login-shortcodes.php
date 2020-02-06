@@ -113,7 +113,7 @@ class DH_Login_Shortcodes {
 
         $mergedAtts = array_merge(array(
             'class' => 'dh-sign-up-link',
-            'href' => site_url(get_option('dhcl_signup_slug'))
+            'href' => $this->use_next_if_exists(get_option('dhcl_signup_slug'))
         ), $original);
 
         $startHtml = '<a';
@@ -132,7 +132,7 @@ class DH_Login_Shortcodes {
 
         $mergedAtts = array_merge(array(
             'class' => 'dh-login-link',
-            'href' => site_url(get_option('dhcl_login_slug'))
+            'href' => $this->use_next_if_exists(get_option('dhcl_login_slug'))
         ), $original);
 
         $startHtml = '<a';
@@ -158,5 +158,32 @@ class DH_Login_Shortcodes {
 
     public function form_messages() {
         return '<div id="dh_form_messages"></div>';
+    }
+
+    // If the current request uri has a 'next' query param,
+    // we want to return a link for the passed in path 
+    // that uses the same 'next' query param.
+    // So either a link with previous 'next' will be returned,
+    // or a link without a 'next' will be returned.
+    // This function will for sure be used in the shortcodes 
+    // for creating login and signup links that are put on the login
+    // and signup pages.
+    public function use_next_if_exists($newPath)
+    {
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $parsedRequest = parse_url($requestUri);
+
+        // if there was already a 'next' param in the url, we want to use is value again
+        $existingNextValue = dhcl_get_existing_next($parsedRequest);
+        if (isset($existingNextValue)) {
+            // there was an existing next value, tack it on and return it
+            $next = '?next=' . $existingNextValue;
+
+            $pathWithNext = $newPath . $next;
+
+            return site_url($pathWithNext);
+        }
+
+        return site_url($newPath);
     }
 }

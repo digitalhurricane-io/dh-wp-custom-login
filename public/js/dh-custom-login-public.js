@@ -43,13 +43,23 @@
 						return;
 					}
 
-					const redirectUrl = $('input[name="redirect_to"]').val();
-					if (!redirectUrl) {
-						// we're not on a page that needs / wants a redirect
+					// look for redirect location provided as query param 'next'
+					const urlParams = new URLSearchParams(window.location.search);
+					console.log('urlParams: ', urlParams);
+					const next = urlParams.get('next');
+					console.log('next: ', next);
+					if (next) {
+						window.location.href = next;
 						return;
 					}
 
-					window.location.href = redirectUrl;
+					// look for redirect location provided in hidden input
+					const redirectUrl = $('input[name="redirect_to"]').val();
+					if (!redirectUrl) {
+						window.location.href = redirectUrl;
+						return;
+					}
+
 				},
 				error: function (a,b,c) {
 					console.log(a,b,c);

@@ -80,3 +80,58 @@ function run_dh_custom_login() {
 
 }
 run_dh_custom_login();
+
+
+
+
+// add some global functions
+
+// To be used with redirects with the 'template_redirect' hook.
+//
+// Creates a new url using the given path, with a query parameter named next.
+// The 'next' query param value is the path and query params of the url we are 
+// navigating to currently, $_SERVER['REQUEST_URI']
+// After login or registration is finished, the 'next' query param will be used in the redirect.
+function dhcl_create_next_url($newPath) {
+	// add slashes if don't exist, format will be /path/
+	$newPath = dhcl_pre_slash_it(trailingslashit($newPath));
+
+	$requestUri = $_SERVER['REQUEST_URI'];
+	$parsedRequest = parse_url($requestUri);
+	$next = '?next=' . $parsedRequest['path'] . '?' . $parsedRequest['query'];
+
+	$pathWithNext = $newPath . $next;
+	$finalUrl = site_url($pathWithNext);
+	return $finalUrl;
+}
+
+// same as above but query params are not passed on
+function dhcl_next_url_strip_params($newPath)
+{
+	// add slashes if don't exist, format will be /path/
+	$newPath = dhcl_pre_slash_it(trailingslashit($newPath));
+
+	$requestUri = $_SERVER['REQUEST_URI'];
+	$parsedRequest = parse_url($requestUri);
+	$next = '?next=' . $parsedRequest['path'];
+
+	$pathWithNext = $newPath . $next;
+	$finalUrl = site_url($pathWithNext);
+	return $finalUrl;
+}
+
+// if url already has a 'next' query param, return it,
+// else return null
+function dhcl_get_existing_next($parsedUrl) {
+	$queryParams = [];
+	parse_str($parsedUrl['query'], $queryParams);
+	return $queryParams['next'];
+}
+
+// add slash to beginning of string if doesn't exist
+function dhcl_pre_slash_it($str) {
+	if (mb_substr($str, 0, 1) === '/') {
+		return $str;
+	}
+	return '/' . $str;
+}
