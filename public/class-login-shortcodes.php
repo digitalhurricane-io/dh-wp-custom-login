@@ -36,9 +36,14 @@ class DH_Login_Shortcodes {
     public function login_form_closing($atts)
     {
 
-        $redirect_url = home_url();
-        if (isset($atts['relative_redirect_url'])) {
-            $redirect_url = home_url(esc_attr($atts['relative_redirect_url']));
+        $redirect_url = site_url();
+        $redirect_option = get_option('dhcl_after_logged_in_redirect');
+
+        if (!empty($redirect_option)) {
+            $redirect_url = site_url('/'.$redirect_option);
+
+        } else if (isset($atts['relative_redirect_url'])) {
+            $redirect_url = site_url(esc_attr($atts['relative_redirect_url']));
         }
 
         return $this->login_redirect_input($redirect_url) . $this->login_test_cookie_input() . '</form>';

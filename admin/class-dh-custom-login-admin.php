@@ -177,6 +177,22 @@ class Dh_Custom_Login_Admin {
 					<br> visit one of the pages listed above. Admins will not be redirected.',
 				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
 			),
+			array(
+				'uid' => 'dhcl_after_logged_in_redirect',
+				'label' => 'After Logged in Redirect',
+				'section' => 'dhcl_slug_section',
+				'type' => 'text',
+				'supplimental' => 'Page where user will be redirected after they login.',
+				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
+			),
+			array(
+				'uid' => 'dhcl_after_signup_in_redirect',
+				'label' => 'After Signup Redirect',
+				'section' => 'dhcl_slug_section',
+				'type' => 'text',
+				'supplimental' => 'Page where user will be redirected after they signup.',
+				'sanitizer' => 'dhcl_strip_leading_slash_sanitizer',
+			),
 
 
 			array(

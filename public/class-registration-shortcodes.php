@@ -52,6 +52,16 @@ class DH_Registration_Shortcodes {
             'partial_redirect_url' => '/'
         ), $atts);
 
-        return '<input type="hidden" name="redirect_to" value="'. esc_attr($vals['partial_redirect_url']) . '" /></form>';
+        $redirect_url = site_url();
+        $redirect_option = get_option('dhcl_after_signup_in_redirect');
+
+        if (!empty($redirect_option)) {
+            $redirect_url = site_url('/' . $redirect_option);
+
+        } else if (isset($atts['relative_redirect_url'])) {
+            $redirect_url = site_url(esc_attr($atts['relative_redirect_url']));
+        }
+
+        return '<input type="hidden" name="redirect_to" value="'. $redirect_url . '" /></form>';
     }
 }
