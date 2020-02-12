@@ -61,7 +61,8 @@ class DH_Redirects {
         if ($this->target_page_match()) {
             // user is trying to go to disallowed page
             // we should 404 them
-            wp_safe_redirect(home_url('/404'));
+            //wp_safe_redirect(home_url('/404'));
+            wp_safe_redirect(home_url(get_option('dhcl_login_slug')));
         }
     }
 
