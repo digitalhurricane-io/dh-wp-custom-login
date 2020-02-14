@@ -16,7 +16,7 @@
  * Plugin Name:       DH Custom Login
  * Plugin URI:        http://example.com/dh-custom-login-uri/
  * Description:       Allows you to create custom login pages with html. Also hides wp-login, etc.
- * Version:           1.0.0
+ * Version:           1.0.2
  * Author:            Your Name or Your Company
  * Author URI:        http://example.com/
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'DH_CUSTOM_LOGIN_VERSION', '1.0.0' );
+define( 'DH_CUSTOM_LOGIN_VERSION', '1.0.2' );
 
 /**
  * The code that runs during plugin activation.
@@ -82,7 +82,15 @@ function run_dh_custom_login() {
 run_dh_custom_login();
 
 
-
+// UPDATE CHECK
+require 'plugin-update-checker/plugin-update-checker.php';
+$doLoginUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://github.com/digitalhurricane-io/dh-wp-custom-login',
+	__FILE__,
+	'dh-wp-custom-login'
+);
+//$doLoginUpdateChecker->setBranch('master');
+//$doLoginUpdateChecker->getVcsApi()->enableReleaseAssets();
 
 // add some global functions
 
