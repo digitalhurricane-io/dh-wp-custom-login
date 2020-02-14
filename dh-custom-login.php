@@ -8,17 +8,17 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://example.com
+ * @link              https://github.com/digitalhurricane-io/dh-wp-custom-login
  * @since             1.0.0
  * @package           Dh_Custom_Login
  *
  * @wordpress-plugin
  * Plugin Name:       DH Custom Login
- * Plugin URI:        http://example.com/dh-custom-login-uri/
+ * Plugin URI:        https://github.com/digitalhurricane-io/dh-wp-custom-login
  * Description:       Allows you to create custom login pages with html. Also hides wp-login, etc.
  * Version:           1.0.2
- * Author:            Your Name or Your Company
- * Author URI:        http://example.com/
+ * Author:            Digital Hurricane
+ * Author URI:        https://github.com/digitalhurricane-io/dh-wp-custom-login
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       dh-custom-login
@@ -83,14 +83,13 @@ run_dh_custom_login();
 
 
 // UPDATE CHECK
+// check gitlab tags vs version at top of this file
 require 'plugin-update-checker/plugin-update-checker.php';
 $doLoginUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/digitalhurricane-io/dh-wp-custom-login',
 	__FILE__,
 	'dh-wp-custom-login'
 );
-//$doLoginUpdateChecker->setBranch('master');
-//$doLoginUpdateChecker->getVcsApi()->enableReleaseAssets();
 
 // add some global functions
 
