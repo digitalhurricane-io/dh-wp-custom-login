@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       DH Custom Login
  * Plugin URI:        https://github.com/digitalhurricane-io/dh-wp-custom-login
- * Description:       Allows you to create custom login pages with html. Also hides wp-login, etc.
+ * Description:       Allows you to create custom login pages with html. Also redirects wp-login, etc.
  * Version:           1.0.5
  * Author:            Digital Hurricane
  * Author URI:        https://github.com/digitalhurricane-io/dh-wp-custom-login
@@ -131,8 +131,8 @@ function dhcl_next_url_strip_params($newPath)
 // else return null
 function dhcl_get_existing_next($parsedUrl) {
 	$queryParams = [];
-	parse_str($parsedUrl['query'], $queryParams);
-	return $queryParams['next'];
+	isset($parsedUrl['query']) ? parse_str($parsedUrl['query'], $queryParams) : '';
+	return isset($queryParams['next']) ? $queryParams['next'] : null;
 }
 
 // add slash to beginning of string if doesn't exist
