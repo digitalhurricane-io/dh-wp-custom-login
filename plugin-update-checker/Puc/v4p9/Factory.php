@@ -19,6 +19,36 @@ if ( !class_exists('Puc_v4p9_Factory', false) ):
 		protected static $latestCompatibleVersion = '';
 
 		/**
+		 * A wrapper method for buildUpdateChecker() that reads the metadata URL from the plugin or theme header.
+		 *
+		 * @param string $fullPath Full path to the main plugin file or the theme's style.css.
+		 * @param array $args Optional arguments. Keys should match the argument names of the buildUpdateChecker() method.
+		 * @return Puc_v4p9_Plugin_UpdateChecker|Puc_v4p9_Theme_UpdateChecker|Puc_v4p9_Vcs_BaseChecker
+		 */
+		public static function buildFromHeader($fullPath, $args = array()) {
+			$fullPath = self::normalizePath($fullPath);
+
+			//Set up defaults.
+			$defaults = array(
+				'metadataUrl'  => '',
+				'slug'         => '',
+				'checkPeriod'  => 12,
+				'optionName'   => '',
+				'muPluginFile' => '',
+			);
+			$args = array_merge($defaults, array_intersect_key($args, $defaults));
+			extract($args, EXTR_SKIP);
+
+			//Check for the service URI
+			if ( empty($metadataUrl) ) {
+				$metadataUrl = self::getServiceURI($fullPath);
+			}
+
+			/** @noinspection PhpUndefinedVariableInspection These variables are created by extract(), above. */
+			return self::buildUpdateChecker($metadataUrl, $fullPath, $slug, $checkPeriod, $optionName, $muPluginFile);
+		}
+
+		/**
 		 * Create a new instance of the update checker.
 		 *
 		 * This method automatically detects if you're using it for a plugin or a theme and chooses
@@ -176,6 +206,35 @@ if ( !class_exists('Puc_v4p9_Factory', false) ):
 				return basename($absolutePath);
 			}
 			return null;
+		}
+
+		/**
+		 * Get the service URI from the file header.
+		 *
+		 * @param string $fullPath
+		 * @return string
+		 */
+		private static function getServiceURI($fullPath) {
+			//Look for the URI
+			if ( is_readable($fullPath) ) {
+				$seek = array(
+					'github' => 'GitHub URI',
+					'gitlab' => 'GitLab URI',
+					'bucket' => 'BitBucket URI',
+				);
+				$seek = apply_filters('puc_get_source_uri', $seek);
+				$data = get_file_data($fullPath, $seek);
+				foreach ($data as $key => $uri) {
+					if ( $uri ) {
+						return $uri;
+					}
+				}
+			}
+
+			//URI was not found so throw an error.
+			throw new RuntimeException(
+				sprintf('Unable to locate URI in header of "%s"', htmlentities($fullPath))
+			);
 		}
 
 		/**

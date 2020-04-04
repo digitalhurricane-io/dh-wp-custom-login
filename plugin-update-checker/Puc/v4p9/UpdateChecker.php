@@ -60,6 +60,11 @@ if ( !class_exists('Puc_v4p9_UpdateChecker', false) ):
 		 */
 		protected $lastRequestApiErrors = array();
 
+		/**
+		 * @var string|mixed The default is 0 because parse_url() can return NULL or FALSE.
+		 */
+		protected $cachedMetadataHost = 0;
+
 		public function __construct($metadataUrl, $directoryName, $slug = null, $checkPeriod = 12, $optionName = '') {
 			$this->debugMode = (bool)(constant('WP_DEBUG'));
 			$this->metadataUrl = $metadataUrl;
@@ -146,7 +151,7 @@ if ( !class_exists('Puc_v4p9_UpdateChecker', false) ):
 		/**
 		 * Remove hooks that were added by this update checker instance.
 		 */
-		protected function removeHooks() {
+		public function removeHooks() {
 			remove_filter('site_transient_' . $this->updateTransient, array($this,'injectUpdate'));
 			remove_filter('site_transient_' . $this->updateTransient, array($this, 'injectTranslationUpdates'));
 			remove_action(
@@ -159,6 +164,10 @@ if ( !class_exists('Puc_v4p9_UpdateChecker', false) ):
 			remove_action('plugins_loaded', array($this, 'maybeInitDebugBar'));
 
 			remove_action('init', array($this, 'loadTextDomain'));
+
+			if ( $this->scheduler ) {
+				$this->scheduler->removeHooks();
+			}
 		}
 
 		/**
@@ -187,12 +196,11 @@ if ( !class_exists('Puc_v4p9_UpdateChecker', false) ):
 		 * @return bool
 		 */
 		public function allowMetadataHost($allow, $host) {
-			static $metadataHost = 0; //Using 0 instead of NULL because parse_url can return NULL.
-			if ( $metadataHost === 0 ) {
-				$metadataHost = parse_url($this->metadataUrl, PHP_URL_HOST);
+			if ( $this->cachedMetadataHost === 0 ) {
+				$this->cachedMetadataHost = parse_url($this->metadataUrl, PHP_URL_HOST);
 			}
 
-			if ( is_string($metadataHost) && (strtolower($host) === strtolower($metadataHost)) ) {
+			if ( is_string($this->cachedMetadataHost) && (strtolower($host) === strtolower($this->cachedMetadataHost)) ) {
 				return true;
 			}
 			return $allow;
