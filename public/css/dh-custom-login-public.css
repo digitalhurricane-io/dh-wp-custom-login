@@ -49,3 +49,7 @@
 #dh_form_messages {
     margin-top: 10px;
 }
+
+.pnp-hide {
+    display: none;
+}

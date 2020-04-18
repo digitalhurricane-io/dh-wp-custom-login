@@ -6,12 +6,13 @@
 		$('form').on('submit', function(e) {
 			e.preventDefault();
 
+			$('.sign-up-btn-text').addClass('pnp-hide');
+			$('.pnp-loading-spinner').removeClass('pnp-hide');
+			$('.signup-button').prop('disabled', true);
+
 			let form = $(this);
 			let actionUrl = form.attr('action');
 			form = form.serializeArray();
-
-			console.log('action url: ', actionUrl);
-			console.log('making request');
 
 			const urlParams = new URLSearchParams(window.location.search);
 			const rpKey = urlParams.get('key');
@@ -23,15 +24,12 @@
 				]);
 			}
 
-			console.log(form);
-
 
 			$.ajax({
 				type: "POST",
 				url: actionUrl,
 				data: form, // serializes the form's elements.
 				success: function (res) {
-					console.log('res: ', res); // show response from the php script.
 
 					const message = res.data;
 					if (message) {
@@ -45,9 +43,9 @@
 
 					// look for redirect location provided as query param 'next'
 					const urlParams = new URLSearchParams(window.location.search);
-					console.log('urlParams: ', urlParams);
+
 					const next = urlParams.get('next');
-					console.log('next: ', next);
+
 					if (next) {
 						window.location.href = next;
 						return;
@@ -55,17 +53,21 @@
 
 					// look for redirect location provided in hidden input
 					const redirectUrl = $('input[name="redirect_to"]').val();
-					console.log('redirect_to: ', redirectUrl);
+
 					if (redirectUrl) {
-						console.log('redirecting');
+
 						window.location.href = redirectUrl;
 						return;
 					}
 
 				},
 				error: function (a,b,c) {
-					console.log(a,b,c);
+
 					$('#dh_form_messages').text(c);
+
+					$('.sign-up-btn-text').addClass('pnp-hide');
+					$('.pnp-loading-spinner').removeClass('pnp-hide');
+					$('.signup-button').prop('disabled', false);
 				}
 			});
 

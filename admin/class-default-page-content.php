@@ -31,22 +31,20 @@ class DH_Default_Page_Content {
 <div class="login-form-wrapper col-sm card">
 <h1 class="login-title">Sign Up</h1>
 [dh_registration_form_opening]
-<div class="form-group">
-<label>Email</label>
+<div class="form-group"><label>Email</label>
 [dh_registration_email_input class="form-control login-form-element" placeholder="Email"]</div>
-<div class="form-group">
-<label>Username</label>
+<div class="form-group"><label>Username</label>
 [dh_registration_username_input class="form-control login-form-element" placeholder="Username"]</div>
-<div class="form-group">
-<label>Password</label>
+<div class="form-group"><label>Password</label>
 [dh_registration_password_input class="form-control login-form-element" placeholder="Password"]</div>
 [dh_form_messages]
 
-<button type="submit" class="login-form-element btn btn-success btn-block signup-button">Sign Up</button>
+<button class="login-form-element btn btn-success btn-block signup-button" type="submit"><span class="sign-up-btn-text">Sign Up</span>
+<div class="pnp-loading-spinner spinner-border pnp-hide" role="status">
+  <span class="sr-only">Loading...</span></div>
+</button>
 [dh_registration_form_closing relative_redirect_url="/"]
-<div class="row justify-content-center dh-login-links">
-    [dh_login_link_open]Or Login[dh_login_link_close]
-</div>
+<div class="row justify-content-center dh-login-links">[dh_login_link_open]Or Login[dh_login_link_close]</div>
 </div>
 </div>';
     }
