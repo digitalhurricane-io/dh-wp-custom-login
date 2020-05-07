@@ -310,10 +310,6 @@ class Dh_Custom_Login_Admin {
 		return wp_send_json_success();
 	}
 
-	public function t() {
-		echo 'hi';
-	}
-
 	/**
 	 * Makes sure user has admin permissions. Also check whether nonce is valid.
 	 */

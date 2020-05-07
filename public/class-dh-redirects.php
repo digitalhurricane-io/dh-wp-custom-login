@@ -58,6 +58,11 @@ class DH_Redirects {
             return;
         }
 
+        // if their permalinks are not set to postname, they could get locked out of site without this check
+        if (get_option('permalink_structure') !== "/%postname%/") {
+            return;
+        }
+
         if ($this->target_page_match()) {
             // user is trying to go to disallowed page
             // we should 404 them
