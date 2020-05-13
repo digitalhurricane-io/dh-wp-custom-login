@@ -38,6 +38,7 @@
 					
 					if (!res.success) {
 						console.log('no success');
+						reset(message);
 						return;
 					}
 
@@ -62,16 +63,23 @@
 
 				},
 				error: function (a,b,c) {
-
-					$('#dh_form_messages').text(c);
-
-					$('.sign-up-btn-text').addClass('pnp-hide');
-					$('.pnp-loading-spinner').removeClass('pnp-hide');
-					$('.signup-button').prop('disabled', false);
+					reset(c);
 				}
 			});
 
 		});
+
+		// set message and enable button
+		function reset(message) {
+
+			const m = message ? message : '';
+
+			$('#dh_form_messages').text(m);
+
+			$('.sign-up-btn-text').removeClass('pnp-hide');
+			$('.pnp-loading-spinner').addClass('pnp-hide');
+			$('.signup-button').prop('disabled', false);
+		}
 		
 	});
 
