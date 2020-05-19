@@ -4,14 +4,14 @@
 class DH_Login_Logout_Button_Shortcodes {
 
     // example:
-    // [dhcl_login_logout_button login_text="Login" logout_text="Logout" logged_in_classes="" logged_out_classes="" logged_in_anchor_classes="" logged_out_anchor_classes="" link_only_logged_in="true" link_only_logged_out="true"]
+    // [dhcl_login_logout_button logged_in_text="Login" logged_out_text="Logout" logged_in_classes="" logged_out_classes="" logged_in_anchor_classes="" logged_out_anchor_classes="" link_only_logged_in="true" link_only_logged_out="true"]
     public function login_logout_button($atts) {
 
         $original = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
 
         $mergedAtts = array_merge(array(
-            "login_text" => "Login", // text to display when logged in
-            "logout_text" => "Logout", // text to display when logged out
+            "logged_in_text" => "Login", // text to display when logged in
+            "logged_out_text" => "Logout", // text to display when logged out
             "logged_in_classes" => "", // classes to add to button when logged in
             "logged_out_classes" => "", // classes to add to button when logged out
             "logged_in_anchor_classes" => "", // classes to add to anchor tag when logged in
