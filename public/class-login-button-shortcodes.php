@@ -30,14 +30,14 @@ class DH_Login_Logout_Button_Shortcodes {
             $linkHref = wp_logout_url(home_url());
             $linkClasses = $mergedAtts['logged_in_anchor_classes'];
             $buttonClasses = $mergedAtts['logged_in_classes'];
-            $buttonText = $mergedAtts['login_text'];
+            $buttonText = $mergedAtts['logged_in_text'];
             $linkOnly = strtolower($mergedAtts['link_only_logged_in']) == 'false' ? false : true; 
         
         } else { // is logged out
             $linkHref = site_url('/' . get_option('dhcl_login_slug'));
             $linkClasses = $mergedAtts['logged_out_anchor_classes'];
             $buttonClasses = $mergedAtts['logged_out_classes'];
-            $buttonText = $mergedAtts['logout_text'];
+            $buttonText = $mergedAtts['logged_out_text'];
             $linkOnly = strtolower($mergedAtts['link_only_logged_out']) == 'false' ? false : true; 
 
         }
