@@ -65,6 +65,9 @@ class Dh_Custom_Login_Public {
 	// my class, reset password shortcodes
 	public $reset_password_shortcodes;
 
+	// my class, login / logout / signup button shortcodes
+	public $login_logout_button_shortcodes;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -84,6 +87,7 @@ class Dh_Custom_Login_Public {
 		$this->password_reset = new DH_Password_Reset();
 		$this->pass_email_shortcodes = new DH_Pass_Email_Shortcodes();
 		$this->reset_password_shortcodes = new DH_Reset_Password_Shortcodes();
+		$this->login_logout_button_shortcodes = new DH_Login_Logout_Button_Shortcodes();
 	}
 
 	/**

@@ -140,6 +140,7 @@ class Dh_Custom_Login {
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset-endpoints.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-pass-email-shortcodes.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-password-reset-shortcodes.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-login-button-shortcodes.php';
 
 		$this->loader = new Dh_Custom_Login_Loader();
 
@@ -254,6 +255,9 @@ class Dh_Custom_Login {
 		add_shortcode('dh_rest_password_password_input', [$plugin_public->reset_password_shortcodes, 'password_input']);
 		add_shortcode('dh_rest_password_form_closing', [$plugin_public->reset_password_shortcodes, 'form_closing']);
 
+		// login / logout / signup button shortcodes
+		add_shortcode('dh_login_logout_btn', [$plugin_public->login_logout_button_shortcodes, 'login_logout_button']);
+		add_shortcode('dh_signup_btn', [$plugin_public->login_logout_button_shortcodes, 'signup_button']);
 	}
 
 	/**
