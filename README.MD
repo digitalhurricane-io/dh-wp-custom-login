@@ -5,6 +5,8 @@ This plugin lets you create custom login and registration forms with shortcodes 
 
 Style and markup as you like.
 
+Once the plugin is installed, you can visit the settings page by navigating to "settings > DH Custom Login".
+
 You can click a button in the plugin options to automatically create 
 login, signup, password-reset-request, and password reset pages.
 
