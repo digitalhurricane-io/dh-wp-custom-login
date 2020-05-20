@@ -62,7 +62,7 @@ class DH_Custom_Login_Endpoint {
             'user_login' => $username,
             'user_password' => $password,
             'remember' => true
-        ], false);
+        ], is_ssl());
 
         if (is_wp_error($result)) {
             wp_send_json_error(wp_strip_all_tags($result->get_error_message()));
