@@ -57,7 +57,7 @@ For example, ids and classes.
 
 [dh_registration_username_input id="username-input" class="class1 class2"]  
 Would result in attributes being passed through like so:
-<input id="username-input" class="class1 class2">
+\<input id="username-input" class="class1 class2"\>
 
 * When the plugin is activated wp-login.php will redirect to the login page.
 
@@ -65,4 +65,4 @@ Would result in attributes being passed through like so:
 
 * Wp admin top bar will be hidden for non administrators.
 
-* Auto insertion of <p> tags will be disabled if the page slug is 'login' or 'signup'.
+* Auto insertion of \<p\> tags will be disabled if the page slug is 'login' or 'signup'.
