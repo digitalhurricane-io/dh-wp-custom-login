@@ -4,14 +4,14 @@
 class DH_Login_Logout_Button_Shortcodes {
 
     // example:
-    // [dhcl_login_logout_button logged_in_text="Login" logged_out_text="Logout" logged_in_classes="" logged_out_classes="" logged_in_anchor_classes="" logged_out_anchor_classes="" link_only_logged_in="true" link_only_logged_out="true"]
+    // [dh_login_logout_btn logged_in_text="Login" logged_out_text="Logout" logged_in_classes="" logged_out_classes="" logged_in_anchor_classes="" logged_out_anchor_classes="" link_only_logged_in="true" link_only_logged_out="true"]
     public function login_logout_button($atts) {
 
         $original = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
 
         $mergedAtts = array_merge(array(
-            "logged_in_text" => "Login", // text to display when logged in
-            "logged_out_text" => "Logout", // text to display when logged out
+            "logged_in_text" => "Logout", // text to display when logged in
+            "logged_out_text" => "Login", // text to display when logged out
             "logged_in_classes" => "", // classes to add to button when logged in
             "logged_out_classes" => "", // classes to add to button when logged out
             "logged_in_anchor_classes" => "", // classes to add to anchor tag when logged in
@@ -52,6 +52,7 @@ class DH_Login_Logout_Button_Shortcodes {
         
     }
 
+    // [dh_signup_btn]
     public function signup_button($atts) {
 
         if (is_user_logged_in()) {
@@ -62,10 +63,10 @@ class DH_Login_Logout_Button_Shortcodes {
         $original = is_array($atts) ? $atts : []; // is a string if no shortcode args passed
 
         $mergedAtts = array_merge(array(
-            "text" => "Sign Up", // text to display when logged in
-            "button_classes" => "", // classes to add to button when logged in
-            "anchor_classes" => "", // classes to add to anchor button
-            "link_only" => "false", // whether to ommit button tag and only output anchor
+            "text" => "Sign Up", // text to display 
+            "button_classes" => "", // classes to add to button 
+            "anchor_classes" => "", // classes to add to anchor tag
+            "link_only" => "false", // whether to ommit button tag and only output anchor tag
         ), $original);
 
 
