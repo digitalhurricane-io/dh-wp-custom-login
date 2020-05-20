@@ -50,6 +50,15 @@ Whether to ommit button tag and only output anchor tag
 
 ## Other Info:
 
+
+* When the plugin is activated wp-login.php will redirect to the login page.
+
+* wp-admin will redirect to a 404 page if user is not administrator.
+
+* Wp admin top bar will be hidden for non administrators.
+
+* Auto insertion of \<p\> tags will be disabled if the page slug is 'login' or 'signup'.
+
 * All shortcode attributes will be passed through and set as html attributes in the underlying html elements.
 (Exceptions include login / logout / signup button shortcodes)
 
@@ -59,10 +68,3 @@ For example, ids and classes.
 Would result in attributes being passed through like so:
 \<input id="username-input" class="class1 class2"\>
 
-* When the plugin is activated wp-login.php will redirect to the login page.
-
-* wp-admin will redirect to a 404 page if user is not administrator.
-
-* Wp admin top bar will be hidden for non administrators.
-
-* Auto insertion of \<p\> tags will be disabled if the page slug is 'login' or 'signup'.
