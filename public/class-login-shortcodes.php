@@ -18,12 +18,11 @@ class DH_Login_Shortcodes {
 
         $mergedAtts = array_merge(array(
             'action' => '/wp-admin/admin-ajax.php?action=dhcl_login',
-            'name' => 'loginform',
             'id' => 'login-form',
         ), $original);
 
         //$form_tag = '<form method="POST" action="' . esc_attr($vals['action']) . '" name="' . esc_attr($vals['name']) . '" id="' . esc_attr($vals['id']) . '" class="' . esc_attr($vals['class']) . '">';
-        $startHtml = '<form method="POST" ';
+        $startHtml = '<form method="POST" name="dhclform" ';
         $endHtml = '>';
 
         $nonce = wp_nonce_field('dh_custom_login', '_wpnonce', true, false);

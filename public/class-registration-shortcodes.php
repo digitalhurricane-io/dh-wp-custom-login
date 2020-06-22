@@ -11,7 +11,7 @@ class DH_Registration_Shortcodes {
             'action' => '/wp-admin/admin-ajax.php?action=dhcl_create_account',
         ], $original);
 
-        $startHtml = '<form name="registerform" method="post" novalidate="novalidate"';
+        $startHtml = '<form name="dhclform" method="post" novalidate="novalidate"';
         $endHtml = '>';
 
         // last arg prevents echoing

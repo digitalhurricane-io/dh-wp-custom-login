@@ -9,11 +9,10 @@ class DH_Pass_Email_Shortcodes {
 
         $mergedAtts = array_merge(array(
             'action' => '/wp-admin/admin-ajax.php?action=dhcl_send_password_reset_email',
-            'name' => 'dh-email-form',
             'id' => 'dh-email-form',
         ), $original);
 
-        $startHtml = '<form method="POST" ';
+        $startHtml = '<form method="POST" name="dhclform" ';
         $endHtml = '>';
 
         $nonce = wp_nonce_field('dh_custom_login', '_wpnonce', true, false);

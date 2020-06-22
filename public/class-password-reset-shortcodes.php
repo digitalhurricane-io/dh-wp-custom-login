@@ -9,11 +9,10 @@ class DH_Reset_Password_Shortcodes {
 
         $mergedAtts = array_merge(array(
             'action' => '/wp-admin/admin-ajax.php?action=dhcl_reset_password',
-            'name' => 'dh-pass-form',
             'id' => 'dh-pass-form',
         ), $original);
 
-        $startHtml = '<form method="POST" ';
+        $startHtml = '<form method="POST" name="dhclform "';
         $endHtml = '>';
 
         $nonce = wp_nonce_field('dh_custom_login', '_wpnonce', true, false);

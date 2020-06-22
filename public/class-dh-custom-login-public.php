@@ -140,7 +140,7 @@ class Dh_Custom_Login_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->dh_custom_login, plugin_dir_url( __FILE__ ) . 'js/dh-custom-login-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->dh_custom_login, plugin_dir_url( __FILE__ ) . 'js/dh-custom-login-public-vanilla.js', array(), $this->version, true );
 
 		if (get_option('dhcl_enqueue_bootstrap')) {
 			wp_register_script('bootstrap', plugin_dir_url(__FILE__) . '/js/bootstrap.bundle.min.js', array('jquery'), '4.4.1', true);
