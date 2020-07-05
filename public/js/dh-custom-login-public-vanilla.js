@@ -68,8 +68,13 @@ dhclForm.addEventListener("submit", function(e) {
 			}
 
 			// look for redirect location provided in hidden input
-			const redirectUrl = document.getElementsByName('redirect_to')[0].value;
-
+			let redirectUrl;
+			try {
+				redirectUrl = document.getElementsByName('redirect_to')[0].value;
+			} catch(e) {
+				console.log('no redirect_to element');
+			}
+			
 			if (redirectUrl) {
 				window.location.href = redirectUrl;
 				return;
