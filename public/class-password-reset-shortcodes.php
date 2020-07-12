@@ -12,7 +12,7 @@ class DH_Reset_Password_Shortcodes {
             'id' => 'dh-pass-form',
         ), $original);
 
-        $startHtml = '<form method="POST" name="dhclform "';
+        $startHtml = '<form method="POST" name="dhclform"';
         $endHtml = '>';
 
         $nonce = wp_nonce_field('dh_custom_login', '_wpnonce', true, false);
